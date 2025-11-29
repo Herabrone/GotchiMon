@@ -29,7 +29,18 @@ const dialogueTree = {
             {text: "Continue", action: "HatchEgg", next: null}
         ],
     },
-    
+    Evolution1:{
+        text:"Your Gotchimon is evolving!",
+        options: [
+            {text:"Continue", next: "Evolution1_1" }
+        ],
+    },
+    Evolution1_1:{
+        text:"Your Gotchimon evolved!",
+        options: [
+            {text:"Continue", next: null }
+        ],
+    },
 
 };
 

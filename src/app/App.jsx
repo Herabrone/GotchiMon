@@ -6,7 +6,7 @@ import { DialogueProvider } from '../utils/dialogueContext';
 import Base from '../pages/Base/Base';
 import Landing from '../pages/landing/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
-import Evolution from '../pages/Evolution';
+import Evolution from '../pages/Evolution/Evolution';
 
 function App() {
 
