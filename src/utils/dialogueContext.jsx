@@ -10,6 +10,8 @@ export function DialogueProvider({ children }) {
         * Function to advance the dialogue to the next node
         * nextNode: the key of the next dialogue node
     */
+
+
     const advanceDialogue = (nextNode) => {
         if (nextNode) {
             setCurrentNode(nextNode);  
