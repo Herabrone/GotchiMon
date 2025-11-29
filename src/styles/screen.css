@@ -1,0 +1,62 @@
+.tamagotchi-device {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.tamagotchi-screen {
+    /* Base design is 320x240 (4:3) but make it responsive and bigger */
+    width: clamp(280px, 70vmin, 480px);
+    aspect-ratio: 4 / 3;
+    min-height: 210px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #9bbc0f;
+    border: 2px solid #000;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Everything inside is positioned relative to this container */
+.tamagotchi-screen * {
+    box-sizing: border-box;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.tamagotchi-screen h1 {
+    margin-top: 0;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+}
+
+/* optional: make action buttons and text scale with the container */
+.tamagotchi-screen .action-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    flex-wrap: wrap;
+}
+
+.tamagotchi-screen .Feed_Button,
+.tamagotchi-screen .Fight_Button {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #fff;
+    color: #000;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    white-space: nowrap;
+}
+
+.yum-message {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 6px;
+}
