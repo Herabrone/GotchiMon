@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 
+import { useNavigate } from "react-router-dom";
 import ScreenLayout from '../../components/screenlayout';
 
 export default function SelectEgg() {
