@@ -1,10 +1,18 @@
+@font-face {
+  font-family: "BitDarling10";
+  src: url("../../public/assets/fonts/BitDarling10.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
     
 }
 
 html, body {
-  overflow: hidden;
-  height: 100%;
+    font-family: "BitDarling10", monospace;
+    overflow: hidden;
+    height: 100%;
 }
 
 body {
