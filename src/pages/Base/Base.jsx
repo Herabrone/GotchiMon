@@ -4,6 +4,9 @@ import './Base.css';
 
 import TextWriter from '../../utils/TextWriter';
 import ScreenLayout from '../../components/screenlayout';
+import dialogueTree from '../../components/dialogueTree';
+
+import { useDialogue } from "../../utils/dialogueContext";
 
 export default function Base() {
 
@@ -25,8 +28,13 @@ export default function Base() {
             <div className="action-container"> 
                 <a onClick={Feed_Button} className="Feed_Button">Feed</a> 
             </div>
-            {showMessage && (
+            
+            {showMessage ? (
                 <div className="yum-message">YUM</div>
+            ) : (
+                <div style={{marginTop: 12}}>
+                    <dialogue start="start" onEnd={() => setShowMessage(true)} />
+                </div>
             )}
 
             <div className="action-container">
