@@ -9,11 +9,10 @@
 
 .screen {
     /* Currently 320x240 (4:3) but we can change it to fit our screen size */
-    width: clamp(512px, 70vmin, 512px);
 
 
-    aspect-ratio: 4 / 3;
-    min-height: 210px;
+    aspect-ratio: 250/260;
+    min-height: 80vh;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
