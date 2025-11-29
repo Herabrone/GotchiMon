@@ -34,3 +34,14 @@ a:hover {
     max-width: 100vw;
     max-height: 100vh;
 }
+
+.yum-message {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(0, 128, 0, 0.08);
+    border: 1px solid rgba(0, 128, 0, 0.2);
+    color: #0b6623; /* dark green */
+    font-weight: 700;
+    display: inline-block;
+    border-radius: 6px;
+}

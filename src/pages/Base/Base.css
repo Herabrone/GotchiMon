@@ -1,0 +1,19 @@
+
+.tamagotchi-screen .Feed_Button,
+.tamagotchi-screen .Fight_Button {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #fff;
+    color: #000;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    white-space: nowrap;
+}
+
+.yum-message {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 6px;
+}

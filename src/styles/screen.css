@@ -1,0 +1,92 @@
+.device {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    /* background-image: url('/path/to/your/device.png');  Add PNG here later*/
+}
+
+.screen {
+    /* Currently 320x240 (4:3) but we can change it to fit our screen size */
+    width: clamp(512px, 70vmin, 512px);
+
+
+    aspect-ratio: 4 / 3;
+    min-height: 210px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #9bbc0f;
+    border: 2px solid #000;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Everything inside is positioned relative to this container */
+.screen * {
+    box-sizing: border-box;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.screen h1 {
+    margin-top: 0;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+}
+
+/* makes action buttons and text scale with the container */
+.screen .action-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    flex-wrap: wrap;
+}
+
+/* Dialogue box anchored to bottom of the screen container */
+.screen .dialogue {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+
+    /*Background colour of the dialogue box */
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid #000;
+    padding: 8px;
+    border-radius: 6px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.screen .dialogue-text {
+    color: #000;
+    font-size: clamp(0.9rem, 1.8vmin, 1rem);
+    line-height: 1.3;
+    min-height: 2.2em;
+}
+
+.screen .dialogue-options {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.screen .dialogue-options button {
+    background: #fff;
+    border: 1px solid #000;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Slightly smaller dialogue on very small screens */
+@media (max-width: 420px) {
+    .screen .dialogue { left: 8px; right: 8px; bottom: 8px; padding: 6px; }
+    .screen .dialogue-options button { padding: 5px 8px; }
+}
