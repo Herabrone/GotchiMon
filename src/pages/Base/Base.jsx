@@ -19,7 +19,7 @@ export default function Base() {
             <h1 style={{color: "black"}}>Base</h1>
 
             <div>
-                <TextWriter text="This is a test for showing text one word at a time" delay={70} />
+                <TextWriter text="This is a test for showing text one word at a time" delay={20} />
             </div>
             
             <div className="action-container"> 

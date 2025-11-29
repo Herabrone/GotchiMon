@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-const TextWriter = ({ text, delay = 200 }) => {
+const TextWriter = ({ text, delay = 50 }) => {
 
-    const words = text.split(' ');
-    const [displayedText, setDisplayedText] = useState([]);
-    const [wordIndex, setWordIndex] = useState(0);
+    const chars = [...text];
+    const [displayed, setDisplayed] = useState("");
+    const [index, setIndex] = useState(0);
 
     useEffect(() => {  
-        if (wordIndex < words.length) {
+        if (index < chars.length) {
             const timeout = setTimeout(() => {
-                setDisplayedText(prev => [...prev, words[wordIndex]]);
-                setWordIndex(prev => prev + 1);
+                setDisplayed(prev => prev + chars[index]);
+                setIndex(prev => prev + 1);
             }, delay);
 
             return () => clearTimeout(timeout);
         }
-    }, [wordIndex, words, delay]);
+    }, [index, chars, delay]);
 
     return (
         <span>
-            {displayedText.map((word, index) => (
-                <span key={index} style={{ marginRight: '0.5em' }}>{word}</span>
-            ))}
+            {displayed}
         </span>
     );
 };
