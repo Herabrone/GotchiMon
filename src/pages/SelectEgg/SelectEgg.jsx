@@ -1,30 +1,36 @@
 import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from '../../components/Dialogue';
-
 import ScreenLayout from '../../components/screenlayout';
 
 export default function SelectEgg() {
 
     const navigate = useNavigate();
 
-    const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
+    const { currentNode, advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
 
     const selectEgg = (eggNumber) => {
         // Logic to select the egg and trigger the appropriate dialogue node
         if (eggNumber === 1) {
             // move dialogue to the EggSelected1_0 node and show it
             advanceDialogue('EggSelected1_0');
+            //TODO: Maybe add more egg selections here if we have the time to do so
             setIsDialogueActive(true);
         }
     };
 
+    // When dialogue advances to Base1, navigate to the base page
+    useEffect(() => {
+        if (currentNode === 'Base1') {
+            navigate('/base');
+        }
+    }, [currentNode, navigate]);
+
     const handleDialogueAction = (action) => {
         if (action === 'HatchEgg') {
             // TODO: add egg hatching effects here
-            // After the hatching/dialogue finishes navigate to base
-            navigate('/base');
         }
     };
 

@@ -12,25 +12,49 @@ const dialogueTree = {
         ],
     },
     EggSelected1_0:{
-        text:"You have selected Egg 1! A great choice!",
+        text:"You have selected Egg 1! EGGcelent choice haha!",
         options: [
-            {text: "Continue", next: "EggSelected1_1"}
+            {text: "...", next: "EggSelected1_1"}
         ],
-    }, // add more eggs later
+    }, 
     EggSelected1_1:{
-        text:"...",
+        text:"Tough crowd. Oh and the other eggs? Don't worry about them. They'll be my breakfast! Haha Im just kidding of course. Bye now!",
         options: [
             {text:"Continue", next: "EggSelected1_2" }
         ],
     },
      EggSelected1_2:{
-        text:"Your GotchiMon is hatching!",
+        text:"...",
         options: [
-            {text: "Continue", action: "HatchEgg", next: null}
+            {text: "Continue", action: "HatchEgg", next: "EggSelected1_3"}
+        ],
+    },
+    EggSelected1_3:{
+        text:"Your egg is hatching!",
+        options: [
+            {text: "Continue", next: "EggSelected1_4"}
+        ],
+    },
+    EggSelected1_4:{
+        text:"...",
+        options: [
+            {text: "Continue", action: "HatchEgg", next: "Base1"}
         ],
     },
     
-
+    //Dialogue converges for egg choices here to give more instructions 
+    Base1:{
+        text:"Congratulations! On hatching your first GotchiMon. Always remember to feed and take care of it! And it will take care of you! By making you tons of money!",
+        options: [
+            {text: "Continue", next: "Base2"}
+        ],
+    },
+    Base2:{
+        text:"Now feed your gotchimon! It looks hungry!",
+        options:[
+            {text:"...", next: null}
+        ]
+    },
 };
 
 export default dialogueTree;

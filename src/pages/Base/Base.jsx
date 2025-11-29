@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Base.css';
-
-import TextWriter from '../../utils/TextWriter';
 import ScreenLayout from '../../components/screenlayout';
 import Dialogue from '../../components/Dialogue';
 
@@ -11,45 +9,53 @@ import { useDialogue } from "../../utils/dialogueContext";
 export default function Base() {
 
     const navigate = useNavigate();
-    const [showMessage, setShowMessage] = useState(false);
-    const { isDialogueActive } = useDialogue();
-    const prevIsActiveRef = useRef(isDialogueActive);
+    const { currentNode, isDialogueActive, setIsDialogueActive } = useDialogue();
+    const [isVisible, setIsVisible] = useState(false);
 
-    // When dialogue finishes (active -> inactive), show the message once
+    // If we arrive on this page and the dialogue node was set to Base1,
+    // make sure the dialogue UI is activated so the Base1 text appears.
     useEffect(() => {
-        if (prevIsActiveRef.current && !isDialogueActive) {
-            setShowMessage(true);
+        if (currentNode === 'Base1' && !isDialogueActive) {
+            setIsDialogueActive(true);
         }
-        prevIsActiveRef.current = isDialogueActive;
-    }, [isDialogueActive]);
+    }, [currentNode, isDialogueActive, setIsDialogueActive]);
 
-    const Feed_Button = () => {
-        setShowMessage((prev) => !prev);
+    const Feed = () => {
+
+        // TODO: Feeing logic and effect
+
+        setIsVisible(true); // Show the div
+        setTimeout(() => {
+        setIsVisible(false); // Hide the div after 1000ms (1 second)
+        }, 1000);
     };
+
 
     return (
         <ScreenLayout>
             <h1 style={{color: "black"}}>Base</h1>
 
-            <div>
-                <TextWriter text="This is a test for showing text one word at a time" delay={20} />
-            </div>
-            
-            <div className="action-container"> 
-                <a onClick={Feed_Button} className="Feed_Button">Feed</a> 
-            </div>
-            
-            {showMessage ? (
-                <div className="yum-message">YUM</div>
-            ) : (
-                <div style={{marginTop: 12}}>
-                    <Dialogue />
-                </div>
+            {!isDialogueActive && (
+                <>
+                    <div className="action-container">
+                        <a className="Feed_Button" onClick={Feed}>Feed</a>
+                    </div>
+                    
+                    {isVisible && (
+                        <div className="yum-message">
+                            Yummy!
+                        </div>
+                    )}
+
+                    <div className="action-container">
+                        <a onClick={() => {navigate("/")}} className="Fight_Button">Fight</a>
+                    </div>
+                </>
             )}
 
-            <div className="action-container">
-                <a onClick={() => {navigate("/")}} className="Fight_Button">Fight</a>
-            </div>
+            {/* Render Dialogue so dialogue can appear on this page */}
+            <Dialogue />
+            
         </ScreenLayout>
     )
 }
