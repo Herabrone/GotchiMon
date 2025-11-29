@@ -6,6 +6,11 @@
     text-align: center;
 }
 
+.egg-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .egg-select-title {
     font-size: 4rem;
     text-align: center;
@@ -17,7 +22,7 @@
 }
 
 .egg-select-back {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
 }
 
