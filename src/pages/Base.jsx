@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 
+import TextWriter from '../utils/TextWriter';
+
 export default function Base() {
 
     const navigate = useNavigate();
@@ -9,7 +11,9 @@ export default function Base() {
         <>
             <h1 style={{color: "black"}}>Base</h1>
 
-            <h1 style={{color: "black"}}>text box for dialogue</h1>
+            <div>
+                <TextWriter text="This is a test for showing text one word at a time" delay={100} />
+            </div>
             
             <div className="action-container">
                     <a onClick={() => {navigate("/")}} className="Feed_Button">Feed</a>
