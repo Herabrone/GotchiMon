@@ -2,7 +2,7 @@ import '../styles/global.css';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Base from '../pages/Base';
+import Base from '../pages/Base/Base';
 import Landing from '../pages/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
 

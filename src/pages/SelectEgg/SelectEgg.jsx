@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 
+import ScreenLayout from '../../utils/screenlayout';
+
 export default function SelectEgg() {
 
     const navigate = useNavigate();
 
     return (
-        <>
+        <ScreenLayout>
             <div className="page-container">
 
             <h1 className="egg-select-title">Select an Egg!</h1>
@@ -29,6 +31,6 @@ export default function SelectEgg() {
                     <a onClick={() => {navigate("/")}} className="egg-select-back">Nevermind</a>
                 </div>
             </div>
-        </>
+        </ScreenLayout>
     )
 }
