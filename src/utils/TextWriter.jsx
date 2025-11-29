@@ -6,13 +6,19 @@ const TextWriter = ({ text, delay = 50 }) => {
     const [displayed, setDisplayed] = useState("");
     const [index, setIndex] = useState(0);
 
+    // Reset when text changes
+    useEffect(() => {
+        setDisplayed("");
+        setIndex(0);
+    }, [text]);
+
     useEffect(() => {  
         if (index < chars.length) {
             const timeout = setTimeout(() => {
                 setDisplayed(prev => prev + chars[index]);
                 setIndex(prev => prev + 1);
             }, delay);
-
+            
             return () => clearTimeout(timeout);
         }
     }, [index, chars, delay]);

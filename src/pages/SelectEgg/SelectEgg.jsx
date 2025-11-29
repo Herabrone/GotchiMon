@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
+import { useDialogue } from "../../utils/dialogueContext";
+import Dialogue from '../../components/Dialogue';
 
 import ScreenLayout from '../../components/screenlayout';
 
@@ -7,29 +9,57 @@ export default function SelectEgg() {
 
     const navigate = useNavigate();
 
+    const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
+
+    const selectEgg = (eggNumber) => {
+        // Logic to select the egg and trigger the appropriate dialogue node
+        if (eggNumber === 1) {
+            // move dialogue to the EggSelected1_0 node and show it
+            advanceDialogue('EggSelected1_0');
+            setIsDialogueActive(true);
+        }
+    };
+
+    const handleDialogueAction = (action) => {
+        if (action === 'HatchEgg') {
+            // TODO: add egg hatching effects here
+            // After the hatching/dialogue finishes navigate to base
+            navigate('/base');
+        }
+    };
+
     return (
         <ScreenLayout>
             <div className="page-container">
 
-            <h1 className="egg-select-title">Select an Egg!</h1>
+                {!isDialogueActive && (
+                    <>
+                        <h1 className="egg-select-title">Select an Egg!</h1>
 
-                <div className="egg-select-container">
-                    
-                    <div>
-                        Egg 1
-                    </div>
+                        <div className="egg-select-container">
 
-                    <div>
-                        Egg 2
-                    </div>
+                        {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
+                            <div>
+                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 1</a>
+                            </div>
 
-                    <div>
-                        Egg 3
-                    </div>
-                </div>
-                <div className="action-container">
-                    <a onClick={() => {navigate("/")}} className="egg-select-back">Nevermind</a>
-                </div>
+                            <div>
+                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 2</a>
+                            </div>
+
+                            <div>
+                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 3</a>
+                            </div>
+
+                        </div>
+                        <div className="action-container">
+                            <a onClick={() => {navigate("/")}} className="egg-select-back">Nevermind</a>
+                        </div>
+                    </>
+                )}
+
+                {/* Render dialogue so the egg-hatching dialogue can appear on this page */}
+                <Dialogue onAction={handleDialogueAction} />
             </div>
         </ScreenLayout>
     )
