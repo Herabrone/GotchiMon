@@ -9,6 +9,11 @@
 .egg-container {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+}
+
+.egg-container:hover {
+    transform: translateY(-5px);
 }
 
 .egg-select-title {

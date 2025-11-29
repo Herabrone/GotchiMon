@@ -41,34 +41,15 @@ export default function SelectEgg() {
                     <>
                         <h1 className="egg-select-title">Select an Egg!</h1>
 
-                <div className="egg-select-container">
-                    
-                    {eggs.map((egg) => (
-                        <div className="egg-container">
-                            <span>{egg.image}</span>
-                            <span>{egg.name}</span>
-                        </div>
-                    ))}
-
-                </div>
-                
-                <div className="action-container">
-                    <a onClick={() => {navigate("/")}} className="egg-select-back">Nevermind</a>
-                </div>
                         <div className="egg-select-container">
-
-                        {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 1</a>
-                            </div>
-
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 2</a>
-                            </div>
-
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 3</a>
-                            </div>
+                    
+                            {eggs.map((egg) => (
+                                <div className="egg-container" onClick={() => selectEgg(1)}>
+                                    {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
+                                    <span>{egg.image}</span>
+                                    <span>{egg.name}</span>
+                                </div>
+                            ))}
 
                         </div>
                         <div className="action-container">
