@@ -6,6 +6,7 @@ import { DialogueProvider } from '../utils/dialogueContext';
 import Base from '../pages/Base/Base';
 import Landing from '../pages/landing/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
+import Fight from '../pages/Fight/Fight';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path={"/"} element={<Landing/>}/>
             <Route path={"/base"} element={<Base/>}/>
             <Route path={"/select-egg"} element={<SelectEgg/>}/>
+            <Route path="/fight" element={<Fight />} />
           </Routes>
         </BrowserRouter>
       </DialogueProvider>

@@ -1,0 +1,159 @@
+/* ================================
+   Layout
+================================ */
+.fight-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.battle-area {
+    flex: 1;
+    position: relative;
+}
+
+/* ================================
+   Player Monster Wrapper
+================================ */
+.player-monster {
+    position: absolute;
+    left: 35%;
+    bottom: 40%;
+    z-index: 1;
+}
+
+.player-monster.attacking {
+    animation: attack-move 0.8s ease-in-out;
+}
+
+/* Attack dash */
+@keyframes attack-move {
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(120px); }
+    100% { transform: translateX(0); }
+}
+
+/* ================================
+   Enemy Monster Wrapper
+================================ */
+.enemy-monster {
+    position: absolute;
+    right: 35%;
+    bottom: 40%;
+}
+
+/* ================================
+   Shared Sprite Base
+================================ */
+.sprite {
+    width: 30px;
+    height: 32px;
+
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* ================================
+   Player Sprite
+================================ */
+.dude-monster-idle {
+    background-image: url("../../../public/assets/sprites/second_evo/Dude_Monster_Idle_4.png");
+    background-size: 120px 32px;
+    transform: scale(2);
+    animation: walk 0.6s steps(4) infinite;
+}
+
+/* ================================
+   Enemy Sprites
+================================ */
+.pink-monster-idle {
+    background-image: url("../../../public/assets/sprites/second_evo/Pink_Monster_Idle_4.png");
+    background-size: 120px 32px;
+    transform: scaleX(-1) scale(2);
+    animation: walk 0.6s steps(4) infinite;
+}
+
+.pink-monster-hurt {
+    background-image: url("../../../public/assets/sprites/second_evo/Pink_Monster_Hurt_4.png");
+    background-size: 120px 32px;
+    transform: scaleX(-1) scale(2);
+    animation: walk 0.6s steps(4) 1 forwards;
+}
+
+/* ================================
+   Walk Animation
+================================ */
+@keyframes walk {
+    from { background-position: 0 0; }
+    to   { background-position: -120px 0; }
+}
+
+/* ================================
+   Screen Shake Animation
+================================ */
+
+@keyframes screen-shake {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-4px, 2px); }
+    40%  { transform: translate(4px, -2px); }
+    60%  { transform: translate(-2px, 2px); }
+    80%  { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.battle-area.shake {
+    animation: screen-shake 0.25s linear;
+}
+
+/* ================================
+   Textbox
+================================ */
+.textbox {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 12px;
+    margin: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.textbox p {
+    margin: 0;
+    font-size: clamp(0.8rem, 3vw, 1rem);
+}
+
+.text-content {
+    min-height: 1.2em;
+}
+
+.button-area {
+    min-height: 52px;
+}
+
+/* ================================
+   Buttons
+================================ */
+.fight-button {
+    background: #306230;
+    color: white;
+    border: 2px solid #000;
+    padding: 16px;
+    margin: 8px;
+    font-family: "BitDarling10", monospace;
+    font-size: clamp(0.8rem, 3vw, 1rem);
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.fight-button:hover {
+    background: #0f380f;
+}
+
+.fight-button:active {
+    transform: scale(0.95);
+}
