@@ -1,14 +1,19 @@
-import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from '../../components/Dialogue';
 
+import { useNavigate } from "react-router-dom";
 import ScreenLayout from '../../components/screenlayout';
 
 export default function SelectEgg() {
 
     const navigate = useNavigate();
 
+    const eggs = [
+        {name: "Egg 1", image: "image1"},
+        {name: "Egg 2", image: "image2"},
+        {name: "Egg 3", image: "image3"}
+    ]
     const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
 
     const selectEgg = (eggNumber) => {
@@ -37,19 +42,14 @@ export default function SelectEgg() {
                         <h1 className="egg-select-title">Select an Egg!</h1>
 
                         <div className="egg-select-container">
-
-                        {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 1</a>
-                            </div>
-
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 2</a>
-                            </div>
-
-                            <div>
-                                <a onClick={() => {selectEgg(1)}} className="select-egg1">Egg 3</a>
-                            </div>
+                    
+                            {eggs.map((egg) => (
+                                <div className="egg-container" onClick={() => selectEgg(1)}>
+                                    {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
+                                    <span>{egg.image}</span>
+                                    <span>{egg.name}</span>
+                                </div>
+                            ))}
 
                         </div>
                         <div className="action-container">

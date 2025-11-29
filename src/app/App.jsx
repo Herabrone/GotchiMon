@@ -7,6 +7,7 @@ import Base from '../pages/Base/Base';
 import Landing from '../pages/landing/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
 import Fight from '../pages/Fight/Fight';
+import Shop from '../pages/Shop/Shop';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path={"/base"} element={<Base/>}/>
             <Route path={"/select-egg"} element={<SelectEgg/>}/>
             <Route path="/fight" element={<Fight />} />
+            <Route path={"/shop"} element={<Shop/>}/>
           </Routes>
         </BrowserRouter>
       </DialogueProvider>
