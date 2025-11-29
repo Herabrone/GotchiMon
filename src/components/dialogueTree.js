@@ -1,6 +1,6 @@
 const dialogueTree = {
     start:{
-        text: "Hello! Were so excited to have you",
+        text: "Hello! Were so exited for you to join us at get your first GotchiMon!",
         options: [
             {text: "Next...", next: "Nursery01"},
         ],
@@ -8,15 +8,20 @@ const dialogueTree = {
     Nursery01: {
         text:"We have three choices for you! There are no bad choices, but some people say some are better than others!",
         options: [
-            {text: "Show me the choices", next: "Nursery02"},
+            {text: "Show me the choices", action: "SelectEgg"}
         ],
     },
-    Nursery02: {
-        text: "Great choice!",
+    EggSelected1_0:{
+        text:"You have selected Egg 1! A great choice!",
         options: [
-            {text: "Go back", next: "start"},
+            {text: "Continue", next: null}
         ],
+    }, // add more eggs later
+    EggSelected1_1:{
+        text:"You have selected Egg 1! A great choice!",
+        options: [],
     },
+
 };
 
 export default dialogueTree;

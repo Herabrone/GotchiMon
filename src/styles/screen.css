@@ -9,7 +9,7 @@
 
 .screen {
     /* Currently 320x240 (4:3) but we can change it to fit our screen size */
-    width: clamp(280px, 70vmin, 480px);
+    width: clamp(512px, 70vmin, 512px);
 
 
     aspect-ratio: 4 / 3;

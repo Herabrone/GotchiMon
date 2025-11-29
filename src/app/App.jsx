@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DialogueProvider } from '../utils/dialogueContext';
 
 import Base from '../pages/Base/Base';
-import Landing from '../pages/Landing';
+import Landing from '../pages/landing/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
 
 function App() {
