@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './Base.css';
 
 import TextWriter from '../../utils/TextWriter';
-import ScreenLayout from '../../utils/screenlayout';
+import ScreenLayout from '../../components/screenlayout';
 
 export default function Base() {
 
