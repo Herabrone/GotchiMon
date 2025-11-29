@@ -1,0 +1,23 @@
+.egg-select-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 50px;
+    text-align: center;
+}
+
+.egg-select-title {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.action-container {
+    display: flex;
+    justify-content: center;
+}
+
+.egg-select-back {
+    font-size: 2rem;
+    text-align: center;
+}
+

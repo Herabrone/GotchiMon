@@ -1,8 +1,28 @@
 :root {
+    
+}
 
+html, body {
+  overflow: hidden;
+  height: 100%;
 }
 
 body {
+    padding: 0;
+    margin: 0;
     color: black;
     background-color: white;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.page-container {
+    max-width: 100vw;
+    max-height: 100vh;
 }
