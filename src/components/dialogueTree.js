@@ -125,11 +125,11 @@ const dialogueTree = {
     FightReward: {
         text: "Gold coin was dropped.",
         options: [
-            {text: "Continue", next: "FightComplete"}
+            {text: "Continue", action: "RewardCoin", next: "FightComplete"}
         ],
     },
     FightComplete: {
-        text: "Press space to return to base.",
+        text: "Please return to base.",
         options: [
             {text: "Continue", action: "ReturnToBase", next: null}
         ],
