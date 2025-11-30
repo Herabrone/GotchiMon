@@ -8,6 +8,7 @@ import Landing from '../pages/landing/Landing';
 import SelectEgg from '../pages/SelectEgg/SelectEgg';
 import Fight from '../pages/Fight/Fight';
 import Shop from '../pages/Shop/Shop';
+import Final from '../pages/Final/Final';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path={"/select-egg"} element={<SelectEgg/>}/>
             <Route path="/fight" element={<Fight />} />
             <Route path={"/shop"} element={<Shop/>}/>
+            <Route path={"/final"} element={<Final/>}/>
           </Routes>
         </BrowserRouter>
       </DialogueProvider>

@@ -26,21 +26,9 @@ const dialogueTree = {
         ],
     },
      EggSelected1_2:{
-        text:"...",
+        text:"Press SPACE repeatedly to hatch your egg!",
         options: [
-            {text: "Continue", action: "HatchEgg", next: "EggSelected1_3"}
-        ],
-    },
-    EggSelected1_3:{
-        text:"Your egg is hatching!",
-        options: [
-            {text: "Continue", next: "EggSelected1_4"}
-        ],
-    },
-    EggSelected1_4:{
-        text:"...",
-        options: [
-            {text: "Continue", action: "HatchEgg", next: "Base1"}
+            {text: "Start Hatching", action: "HatchEgg"}
         ],
     },
     

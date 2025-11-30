@@ -138,7 +138,8 @@ export default function Shop() {
                     
                 </div>
 
-                <Dialogue onAction={handleDialogueAction} />            </ScreenLayout>
+                <Dialogue onAction={handleDialogueAction} />            
+            </ScreenLayout>
         </>
     )
 }

@@ -6,6 +6,7 @@ import { useDialogue } from "../../utils/dialogueContext";
 import './Landing.css';
 import { shopItems } from '../../data/ShopData';
 import { coins } from '../../data/UserData';
+import { food } from '../../data/UserData';
 
 export default function Landing() {
     const { setIsDialogueActive, resetDialogue, isDialogueActive, advanceDialogue } = useDialogue();
@@ -25,7 +26,7 @@ export default function Landing() {
     const handleDialogueAction = (action) => {
         if (action === "SelectEgg") {
             advanceDialogue();
-            navigate("/select-egg");
+            navigate("/select-egg"); 
         }
     };
 
@@ -34,6 +35,12 @@ export default function Landing() {
         localStorage.clear();
         localStorage.setItem("shopItems", JSON.stringify(shopItems));
         localStorage.setItem("coins", JSON.stringify(coins));
+
+        //initializing food
+        localStorage.setItem("food", JSON.stringify(1));
+        
+        //initializing monster state
+        localStorage.setItem("monster_state", JSON.stringify(1));
     }
 
     return (
