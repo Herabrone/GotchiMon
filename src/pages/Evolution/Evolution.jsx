@@ -8,7 +8,7 @@ import { useDialogue } from "../../utils/dialogueContext";
 // Import sprites - matching Base.jsx import paths
 import babyIdle from '../../../public/assets/sprites/first_evo/Baby_Monster_Idle.png';
 import dudeIdle from '../../../public/assets/sprites/second_evo/Dude_Monster_Idle_4.png';
-import goodMonster from '../../../public/assets/sprites/third_evo/Good_monster_Idle.png';
+import goodMonster from '../../../public/assets/sprites/third_evo/Good_Monster_Idle.png';
 import badMonster from '../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png';
 
 // Sound effects
@@ -118,7 +118,7 @@ export default function Evolution() {
         } else if (newState === 3) {
             // Second evolution: dude -> good/bad
             const alignment = localStorage.getItem('monsterAlignment') || 'good';
-            setCurrentSprite(alignment === 'good' ? goodMonster : badMonster);
+            setCurrentSprite(alignment.includes("good") ? goodMonster : badMonster);
             setUseAnimatedSprite(true); // Final forms use CSS animation
             console.log('Evolved to final form:', alignment);
         }
@@ -158,7 +158,7 @@ export default function Evolution() {
         } else if (monsterState === 3 && useAnimatedSprite) {
             // Final form with CSS animation
             const alignment = localStorage.getItem('monsterAlignment') || 'good';
-            return <div className={alignment === 'good' ? 'good-evolution-sprite' : 'bad-evolution-sprite'}></div>;
+            return <div className={alignment.includes("good") ? 'good-evolution-sprite' : 'bad-evolution-sprite'}></div>;
         }
         
         // Fallback to static image
