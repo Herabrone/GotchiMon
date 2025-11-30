@@ -284,26 +284,20 @@ export default function Base() {
         }
     };
 
-    // Get the appropriate sprite based on monster state
-    const getMonsterSprite = () => {
+    const renderMonster = () => {
         switch(monsterState) {
             case 1:
-                return 'slime-idle-sprite'; // CSS animation class
+                // Baby slime with CSS animation
+                return <div className="slime-idle-sprite"></div>;
             case 2:
-                return monsterState2Sprite;
+                // Dude monster with CSS animation
+                return <div className="dude-base-sprite"></div>;
             case 3:
+                // Final form with CSS animation (good or bad)
                 const alignment = localStorage.getItem('monster_alignment') || 'good';
-                return alignment === 'good' ? goodMonsterSprite : badMonsterSprite;
+                return <div className={alignment === 'good' ? 'good-base-sprite' : 'bad-base-sprite'}></div>;
             default:
-                return 'slime-idle-sprite';
-        }
-    };
-
-    const renderMonster = () => {
-        if (monsterState === 1) {
-            return <div className="slime-idle-sprite"></div>;
-        } else {
-            return <img src={getMonsterSprite()} alt="Gotchimon" className="monster-sprite-img" />;
+                return <div className="slime-idle-sprite"></div>;
         }
     };
 

@@ -3,7 +3,6 @@ import "./Shop.css";
 import { useEffect, useRef, useState } from "react";
 import ScreenLayout from "../../components/screenlayout";
 import { useNavigate } from "react-router-dom";
-import TextWriter from "../../utils/TextWriter";
 import { updateLocalStorage } from "../../utils/localStorage";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
