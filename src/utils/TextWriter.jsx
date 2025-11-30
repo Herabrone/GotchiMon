@@ -1,33 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const TextWriter = ({ text, delay = 50 }) => {
-
+const TextWriter = ({ text, delay = 50, soundSrc = null, onComplete = () => {}, textWriterRef = null }) => {
     const chars = [...text];
     const [displayed, setDisplayed] = useState("");
     const [index, setIndex] = useState(0);
+    const audioRef = useRef(null); 
 
-    // Reset when text changes
+    const finishTyping = () => {
+        setDisplayed(text);
+        setIndex(chars.length);
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }
+    };
+
     useEffect(() => {
-        setDisplayed("");
-        setIndex(0);
-    }, [text]);
+        if (textWriterRef) {
+            textWriterRef.current = finishTyping;
+        }
+    }, [textWriterRef, text]);
 
-    useEffect(() => {  
+    useEffect(() => {
+        if (soundSrc) {
+            audioRef.current = new Audio(soundSrc);
+            const playPromise = audioRef.current.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+            }
+        }
+
+        return () => {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            }
+        };
+    }, [soundSrc]);
+
+    useEffect(() => {
+        let timeout;
+
         if (index < chars.length) {
-            const timeout = setTimeout(() => {
+            timeout = setTimeout(() => {
                 setDisplayed(prev => prev + chars[index]);
                 setIndex(prev => prev + 1);
             }, delay);
-            
-            return () => clearTimeout(timeout);
+        } else {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            }
+            onComplete();
         }
-    }, [index, chars, delay]);
 
-    return (
-        <span>
-            {displayed}
-        </span>
-    );
+        return () => clearTimeout(timeout);
+    }, [index, chars, delay, onComplete]);
+
+    return <span>{displayed}</span>;
 };
 
 export default TextWriter;
