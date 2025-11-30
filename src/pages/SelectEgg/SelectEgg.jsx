@@ -87,7 +87,6 @@ export default function SelectEgg() {
     const selectEgg = (eggNumber) => {
         // Prevent selection if the egg is not available (locked)
         if (!eggs[eggNumber].isAvailable) {
-            console.log(`Egg ${eggNumber + 1} is locked!`);
             return; 
         }
 
