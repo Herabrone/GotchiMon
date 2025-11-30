@@ -84,9 +84,9 @@ export default function SelectEgg() {
     }, []); 
 
     const eggs = [
-        { name: "Egg 1", still: egg1, descent: egg1Descent },
-        { name: "Egg 2", still: egg2, descent: egg2Descent },
-        { name: "Egg 3", still: egg3, descent: egg3Descent }
+        { id: 1, name: "Egg 1", still: egg1, descent: egg1Descent },
+        { id: 2, name: "Egg 2", still: egg2, descent: egg2Descent },
+        { id: 3, name: "Egg 3", still: egg3, descent: egg3Descent }
     ];
 
     const [selectedEggIndex, setSelectedEggIndex] = useState(0);
