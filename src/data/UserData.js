@@ -1,5 +1,6 @@
 export const coins = 1;
 export const food = 1;
+export const goodFood = true;
 
 export const monster_state = 1;
 
