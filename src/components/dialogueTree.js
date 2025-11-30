@@ -1,6 +1,6 @@
 const dialogueTree = {
     start:{
-        text: "Hello! Were so excited for you to join us at get your first GotchiMon!",
+        text: "Hello! Were so excited for you to join us at get your first gotchimon!",
         options: [
             {text: "Continue", next: "Nursery01"},
         ],
@@ -34,7 +34,7 @@ const dialogueTree = {
     
     //Dialogue converges for egg choices here to give more instructions
     Base1:{
-        text:"Congratulations! On hatching your first GotchiMon. Always remember to feed and take care of it! And it will take care of you! By making you tons of money!",
+        text:"Congratulations! On hatching your first gotchimon. Always remember to feed and take care of it! And it will take care of you! By making you tons of money!",
         options: [
             {text: "Continue", next: "Base2"}
         ],
@@ -46,7 +46,7 @@ const dialogueTree = {
         ]
     },
     EggHatched:{
-        text:"Your GotchiMon hatched!",
+        text:"Your gotchimon hatched!",
         options: [
             {text: "Continue", action: "HatchEgg", next: null}
         ]
@@ -66,19 +66,19 @@ const dialogueTree = {
         ],
     },
      EggSelected2_2:{
-        text:"Your GotchiMon is hatching!",
+        text:"Your gotchimon is hatching!",
         options: [
             {text: "Continue", action: "HatchEgg", next: null}
         ],
     },
     Evolution1:{
-        text:"Your Gotchimon is evolving!",
+        text:"Your gotchimon is evolving!",
         options: [
             {text:"Continue", next: "Evolution1_1" }
         ],
     },
     Evolution1_1:{
-        text:"Your Gotchimon evolved!",
+        text:"Your gotchimon evolved!",
         options: [
             {text:"Continue", next: null }
         ],
@@ -98,7 +98,7 @@ const dialogueTree = {
         ],
     },
      EggSelected3_2:{
-        text:"Your GotchiMon is hatching!",
+        text:"Your gotchimon is hatching!",
         options: [
             {text: "Continue", action: "HatchEgg", next: null}
         ],
@@ -135,11 +135,11 @@ const dialogueTree = {
         ],
     },
     Evolution1_0:{
-        text:"Your Gotchimon is evolving!",
+        text:"Your gotchimon is evolving!",
         options: [] // No options - animation will play, then auto-advance to Evolution1_1
     },
     Evolution1_1:{
-        text:"Your Gotchimon evolved!",
+        text:"Your gotchimon evolved!",
         options: [
             {text:"Continue", action: "returnToBase", next: null }
         ],
@@ -192,11 +192,11 @@ const dialogueTree = {
         ],
     },
     Evolution2_0:{
-        text:"Your Gotchimon is evolving again!",
+        text:"Your gotchimon is evolving again!",
         options: [] // No options - animation will play, then auto-advance to Evolution2_1
     },
     Evolution2_1:{
-        text:"Your Gotchimon has reached its final form!",
+        text:"Your gotchimon has reached its final form!",
         options: [
             {text:"Amazing!", action: "returnToBase", next: null }
         ],
@@ -310,7 +310,7 @@ const dialogueTree = {
         ],
     },
     afterSecondEvolution_GOOD_1:{
-        text:"GOTCHIMON: I'm ready to go off on my own...",
+        text:"gotchimon: I'm ready to go off on my own...",
         options: [
             {text: "Continue", next: null}
         ],
@@ -345,7 +345,7 @@ const dialogueTree = {
         ]
     },
     FinalResponseG: {
-        text: "GOTCHIMON: I'm ready to go off on my own!",
+        text: "gotchimon: I'm ready to go off on my own!",
         options: [
             {text: "Continue", next: "FinalEndG"}
         ]
