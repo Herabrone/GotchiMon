@@ -202,7 +202,58 @@ const dialogueTree = {
         ],
     },
 
+    AfterFirstFight_01: {
+        text: "YOU: Only 1 coin? Were going to need to grind all night!",
+        options: [
+            {text: "Continue", next: "AfterFirstFight_02"}
+        ],
+    },
+    AfterFirstFight_02: {
+        text: "YOU: Lets see if the shops has more food",
+        options: [
+            {text: "Continue",  action: "goToShopWithBadFood", next: null}
+        ],
+    },
+    AfterFirstFight_03: {
+        text: "YOU: Here you go, eat it slowly though...",
+        options: [
+            {text: "Continue",  next: null}
+        ],
+    },
+    //Evolution 2 occurs
+    afterSecondEvolution_GOOD_0:{
+        text:"YOU: Wow you evolve fast!",
+        options: [
+            {text: "Continue", next: "afterSecondEvolution_GOOD_1"}
+        ],
+    },
+    afterSecondEvolution_GOOD_1:{
+        text:"GOTCHIMON:> I'm ready to go off on my own...",
+        options: [
+            {text: "Continue", next: null}
+        ],
+    },
+    //gotchimon leaves hapily
 
+    afterSecondEvolution_BAD_0:{
+        text:"YOU: Hey… are you okay? You seem… Different",
+        options: [
+            {text: "Continue", next: "afterSecondEvolution_BAD_1"}
+        ],
+    },
+    afterSecondEvolution_BAD_1:{
+        text:"GOTCHIMON:> What… what have you been feeding me…",
+        options: [
+            {text: "Continue", next: "afterSecondEvolution_BAD_2"}
+        ],
+    },
+    afterSecondEvolution_BAD_2:{
+        text:"GOTCHIMON: My… brothers…",
+        options: [
+            {text: "Continue", next: null}
+        ],
+    },
+    //Gotchimon escapes?
 
 };
 
