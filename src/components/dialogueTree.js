@@ -125,6 +125,82 @@ const dialogueTree = {
             {text: "Continue", action: "firstEvolution", next: null}
         ],
     },
+    // EVOLUTION NODES
+
+    // First Evolution Nodes
+    Evolution1:{
+        text:"What?",
+        options: [
+            {text:"...", next: "Evolution1_0" }
+        ],
+    },
+    Evolution1_0:{
+        text:"Your Gotchimon is evolving!",
+        options: [] // No options - animation will play, then auto-advance to Evolution1_1
+    },
+    Evolution1_1:{
+        text:"Your Gotchimon evolved!",
+        options: [
+            {text:"Continue", action: "returnToBase", next: null }
+        ],
+    },
+
+     // After first Evolution
+    AfterFirstEvolution_01: {
+        text: "YOU: Perfect you've grown so fast! ",
+        options: [
+            {text: "Continue", next: "AfterFirstEvolution_02"}
+        ],
+    },
+    AfterFirstEvolution_02: {
+        text: "YOU: Hungry again? I just fed you!",
+        options: [
+            {text: "Continue", next: "AfterFirstEvolution_03"}
+        ],
+    },
+    AfterFirstEvolution_03: {
+        text: "YOU: Okay fine… this is getting expensive though",
+        options: [
+            {text: "Continue", action: "goToEmptyShop", next: "AfterFirstEvolution_04"}
+        ],
+    },
+    AfterFirstEvolution_04: {
+        text: "YOU: Well that's too bad, looks like they need more time to get more food",
+        options: [
+            {text: "Continue", action: "ReturnToBase", next: "AfterFirstEvolution_05"}
+        ],
+    },
+    AfterFirstEvolution_05: {
+        text: "YOU: In the meantime lets make good on my initial investment! Lets go and fight!",
+        options: [
+            {text: "Continue", action: "FirstFight", next: null}
+        ],
+    },
+
+    // SECOND EVOLUTION (Good/Bad path)
+    ThirdFeeding_01: {
+        text: "YOU: Alright, time to eat!",
+        options: [
+            {text: "Continue", action: "secondEvolution", next: null}
+        ],
+    },
+
+    Evolution2:{
+        text:"What's happening?!",
+        options: [
+            {text:"...", next: "Evolution2_0" }
+        ],
+    },
+    Evolution2_0:{
+        text:"Your Gotchimon is evolving again!",
+        options: [] // No options - animation will play, then auto-advance to Evolution2_1
+    },
+    Evolution2_1:{
+        text:"Your Gotchimon has reached its final form!",
+        options: [
+            {text:"Amazing!", action: "returnToBase", next: null }
+        ],
+    },
 
     // Fight dialogue nodes
     FightBegin: {

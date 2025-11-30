@@ -31,9 +31,31 @@
     text-align: center;
 }
 
-.monster-sprite {
-    min-width: 200px;
-    max-width: 400px;
+/* Original baby slime sprite animation (state 1) */
+.slime-idle-sprite {
+    width: 16px;
+    height: 15px;
+    transform: scale(20);
+    image-rendering: pixelated;
+    background-image: url('../../../public/assets/sprites/first_evo/Baby_Monster_Idle.png');
+    background-size: 80px 15px;
+    background-repeat: no-repeat;
+    animation: walk 1s steps(4) infinite;
+}
+
+@keyframes walk {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -80px 0;
+    }
+}
+
+/* Evolved monster sprites (state 2 and 3) */
+.monster-sprite-img {
+    max-width: 300px;
+    width: 80%;
     height: auto;
     image-rendering: pixelated;
 }
@@ -68,26 +90,19 @@
     color: #000;
 }
 
-.slime-idle-sprite {
-  width: 16px;
-  height: 15px;
-
-  transform: scale(20);
-
-  image-rendering: pixelated;
-
-  background-image: url('../../../public/assets/sprites/first_evo/Baby_Monster_Idle.png');
-  background-size: 80px 15px;
-  background-repeat: no-repeat;
-
-  animation: walk 1s steps(4) infinite;
-}
-
-@keyframes walk {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -80px 0; /* -(frameWidth * numFrames) */
-  }
+/* Responsive adjustments */
+@media (max-width: 420px) {
+    .monster-sprite-img {
+        max-width: 200px;
+    }
+    
+    .action-buttons {
+        bottom: 20px;
+        gap: 8px;
+    }
+    
+    .action-buttons a {
+        padding: 10px 16px;
+        font-size: clamp(0.8rem, 3vw, 1rem);
+    }
 }

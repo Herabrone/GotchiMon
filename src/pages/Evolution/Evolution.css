@@ -1,0 +1,42 @@
+/* Evolution.css */
+
+.evolution-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 70px; /* Leave space for dialogue at bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.evolution-sprite-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.evolution-sprite {
+    width: 250px;
+    height: auto;
+    image-rendering: pixelated;
+    transform: scale(2.5);
+}
+
+/* Ensure dialogue appears on top */
+.evolution-container + .dialogue {
+    z-index: 100;
+}
+
+/* Responsive adjustments */
+@media (max-width: 420px) {
+    .evolution-sprite {
+        max-width: 200px;
+    }
+    
+    .evolution-container {
+        bottom: 60px;
+    }
+}
