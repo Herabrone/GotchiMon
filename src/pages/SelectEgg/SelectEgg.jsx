@@ -22,14 +22,33 @@ import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
 import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
 
 
-// --- STATIC hatching sequence ---
+// --- hatching sequence ---
 const eggPhases = [
+    [
     "/assets/sprites/egg/egg.gif",
-    "/assets/sprites/egg/egg-crack-1.gif",
-    "/assets/sprites/egg/egg-crack-2.gif",
-    "/assets/sprites/egg/egg-crack-3.gif",
+    "/assets/sprites/egg/egg-1/egg-crack-1.gif",
+    "/assets/sprites/egg/egg-1/egg-crack-2.gif",
+    "/assets/sprites/egg/egg-1/egg-crack-3.gif",
     "/assets/sprites/first_evo/Blue_Slime.png"
-];
+    ],
+
+    [
+    "/assets/sprites/egg/egg-2/egg-2.png",
+    "/assets/sprites/egg/egg-2/egg-2-crack-1.png",
+    "/assets/sprites/egg/egg-2/egg-2-crack-2.png",
+    "/assets/sprites/egg/egg-2/egg-2-crack-2.png",
+    "/assets/sprites/first_evo/Red_Slime.png"
+    ],
+
+    [
+    "/assets/sprites/egg/egg-3/egg-3.png",
+    "/assets/sprites/egg/egg-3/egg-3-crack-1.png",
+    "/assets/sprites/egg/egg-3/egg-3-crack-1.png",
+    "/assets/sprites/egg/egg-3/egg-3-crack-2.png",
+    "/assets/sprites/first_evo/Gray_Slime.png"
+    ],
+]
+const hatchPhaseCount = eggPhases[0].length;
 
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3';
 
@@ -106,7 +125,7 @@ export default function SelectEgg() {
         if (!isHatching || e.code !== "Space") return;
         
         // Don't process if already at the end
-        if (phaseIndex >= eggPhases.length - 1) return;
+        if (phaseIndex >= hatchPhaseCount - 1) return;
 
         setShake(true);
         setTimeout(() => setShake(false), 100);
@@ -123,7 +142,7 @@ export default function SelectEgg() {
                     setShake(true);
                     setTimeout(() => setShake(false), 300);
 
-                    if (next === eggPhases.length - 1) {
+                    if (next === hatchPhaseCount - 1) {
                         new Audio(hatchSound).play();
                         // Wait 2 seconds then navigate
                         setTimeout(() => {
@@ -134,7 +153,7 @@ export default function SelectEgg() {
                         }, 2000);
                     }
 
-                    if (next >= eggPhases.length) {
+                    if (next >= hatchPhaseCount) {
                         return prevPhase;
                     }
 
@@ -206,12 +225,12 @@ export default function SelectEgg() {
                 {isHatching && (
                     <div className="egg-hatching-container">
                         <img
-                            src={eggPhases[phaseIndex]}
+                            src={eggPhases[selectedEggIndex][phaseIndex]}
                             className="egg-hatching-sprite selected-egg-img"
                             alt="egg hatching"
                         />
                         <p className="hatch-instructions">
-                            {phaseIndex < eggPhases.length - 1
+                            {phaseIndex < hatchPhaseCount - 1
                                 ? `Keep pressing SPACE to hatch… (${pressCount}/${pressThreshold})`
                                 : "Your Gotchimon hatched!"}
                         </p>
