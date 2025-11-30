@@ -125,16 +125,30 @@ const dialogueTree = {
     FightReward: {
         text: "Gold coin was dropped.",
         options: [
-            {text: "Continue", next: "FightComplete"}
+            {text: "Continue", action: "RewardCoin", next: "FightComplete"}
         ],
     },
     FightComplete: {
-        text: "Press space to return to base.",
+        text: "Please return to base.",
         options: [
             {text: "Continue", action: "ReturnToBase", next: null}
         ],
     },
 
+    // Shop Dialogue nodes
+    ShopStart: {
+        text: "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.",
+        options: [
+            {text: "Ok", action: "Ok", next: null}
+        ],
+    },
+    ShopComplete: {
+        text: "Thank you for shopping! Enjoy :)",
+        options: [
+            {text: "Back to Base", action: "ReturnToBase", next: null}
+        ],
+    },
+    
 };
 
 export default dialogueTree;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ScreenLayout from '../../components/screenlayout';
 import Dialogue from '../../components/Dialogue';
 import { useDialogue } from "../../utils/dialogueContext";
+import { updateLocalStorage } from '../../utils/localStorage';
 import './Fight.css';
 
 export default function Fight() {
@@ -64,6 +65,9 @@ export default function Fight() {
             handleAttack();
         } else if (action === "ReturnToBase") {
             navigate('/base');
+        } else if (action == "RewardCoin") {
+            const currCoins = Number(localStorage.getItem("coins"));
+            updateLocalStorage("coins", currCoins+1);
         }
     };
 
@@ -82,10 +86,6 @@ export default function Fight() {
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, []);
-
-    // Debug log when currentNode changes
-    useEffect(() => {
-    }, [currentNode]);
 
     return (
         <ScreenLayout>

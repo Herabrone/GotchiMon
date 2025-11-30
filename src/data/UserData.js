@@ -1,4 +1,4 @@
-export const coins = 2;
+export const coins = 1;
 export const food = 1;
 
 export const monster_state = 1;
