@@ -1,3 +1,14 @@
+.shop-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-title {
+    text-align: center;
+    font-size: 3em;
+}
+
 .shop-coins-container {
     display: flex;
     align-items: baseline;
@@ -16,6 +27,7 @@
 
 .shop-grid-item img {
     width: 100px;
+    margin-bottom: 20px;
 }
 
 .shop-grid {
