@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
 import { useNavigate } from "react-router-dom";
+
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
 import { updateLocalStorage } from "../../utils/localStorage";
@@ -115,8 +117,16 @@ export default function SelectEgg() {
         return () => window.removeEventListener("keydown", handleKey);
     }, [isHatching, handleKey]);
 
+    // When dialogue advances to Base1, navigate to the base page
+    useEffect(() => {
+        if (currentNode === 'Base1') {
+            navigate('/base');
+        }
+    }, [currentNode, navigate]);
+
     const handleDialogueAction = (action) => {
         if (action === "HatchEgg") {
+            setIsDialogueActive(false);
             setIsHatching(true);
             setPhaseIndex(0);
             setPressCount(0);

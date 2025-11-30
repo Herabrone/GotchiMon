@@ -1,1 +1,1 @@
-export const coins = 2;
+export const coins = 1;
