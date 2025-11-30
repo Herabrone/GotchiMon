@@ -119,6 +119,12 @@ const dialogueTree = {
         ],
     },
 
+    SecondFeeding_01: {
+        text: "YOU: There you go, full yet?",
+        options: [
+            {text: "Continue", action: "firstEvolution", next: null}
+        ],
+    },
 
     // Fight dialogue nodes
     FightBegin: {
