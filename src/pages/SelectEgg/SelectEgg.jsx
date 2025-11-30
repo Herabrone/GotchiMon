@@ -8,6 +8,8 @@ import { updateLocalStorage } from "../../utils/localStorage";
 
 // --- EGG 1 ---
 import egg1 from "../../../public/assets/sprites/egg/egg-1/egg-1.png";
+import egg1Crack from "../../../public/assets/sprites/egg/egg-1/egg-crack-1.gif";
+import egg1Crack2 from "../../../public/assets/sprites/egg/egg-1/egg-crack-2.gif";
 import egg1Descent from "../../../public/assets/sprites/egg/egg-1/egg-bounce-descent.png";
 
 // --- EGG 2 ---
@@ -28,7 +30,7 @@ const finalMonsterSprite = "/assets/sprites/first_evo/Blue_Slime.png";
 // We'll simulate the crack phases visually using the base image and shake effect,
 // only swapping to the monster at the end.
 // We keep an array length of 5 for phase indexing (0, 1, 2, 3, 4)
-const PHASE_COUNT = 5;
+const PHASE_COUNT = 4;
 
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3';
 
@@ -64,7 +66,7 @@ export default function SelectEgg() {
     }, []); 
 
     const eggs = [
-        { name: "Egg 1", still: egg1, descent: egg1Descent, isAvailable: true },
+        { name: "Egg 1", still: egg1, phase: [egg1, egg1Crack, egg1Crack2], descent: egg1Descent, isAvailable: true },
         { name: "Egg 2", still: egg2, descent: egg2Descent, isAvailable: false }, // Locked (DLC)
         { name: "Egg 3", still: egg3, descent: egg3Descent, isAvailable: false } // Locked (DLC)
     ];
@@ -121,8 +123,8 @@ export default function SelectEgg() {
 
             if (newCount >= pressThreshold) {
                 // Threshold met, advance to next crack phase
-                setPhaseIndex((prevPhase) => {
-                    const next = prevPhase + 1;
+                setPhaseIndex(() => {
+                    const next = phaseIndex + 1;
 
                     setShake(true);
                     setTimeout(() => setShake(false), 300);
@@ -139,7 +141,7 @@ export default function SelectEgg() {
                     }
 
                     if (next >= PHASE_COUNT) { // Check against PHASE_COUNT
-                        return prevPhase;
+                        return phaseIndex;
                     }
 
                     // Reset counters for next phase
@@ -207,7 +209,8 @@ export default function SelectEgg() {
     if (isHatching) {
         if (phaseIndex < PHASE_COUNT - 1) {
             // Use the still sprite of the selected egg for all cracking phases
-            currentHatchingSprite = eggs[selectedEggIndex].still;
+            console.log(phaseIndex);
+            currentHatchingSprite = eggs[selectedEggIndex].phase[phaseIndex];
         } else if (phaseIndex === PHASE_COUNT - 1) {
             // Use the final monster sprite
             currentHatchingSprite = finalMonsterSprite;
