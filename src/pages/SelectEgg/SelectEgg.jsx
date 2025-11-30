@@ -64,9 +64,9 @@ export default function SelectEgg() {
     }, []); 
 
     const eggs = [
-        { name: "Egg 1", still: egg1, descent: egg1Descent },
-        { name: "Egg 2", still: egg2, descent: egg2Descent },
-        { name: "Egg 3", still: egg3, descent: egg3Descent }
+        { name: "Egg 1", still: egg1, descent: egg1Descent, isAvailable: true },
+        { name: "Egg 2", still: egg2, descent: egg2Descent, isAvailable: false }, // Locked (DLC)
+        { name: "Egg 3", still: egg3, descent: egg3Descent, isAvailable: false } // Locked (DLC)
     ];
 
     const [selectedEggIndex, setSelectedEggIndex] = useState(0);
@@ -85,6 +85,12 @@ export default function SelectEgg() {
     const getRandomThreshold = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
     const selectEgg = (eggNumber) => {
+        // Prevent selection if the egg is not available (locked)
+        if (!eggs[eggNumber].isAvailable) {
+            console.log(`Egg ${eggNumber + 1} is locked!`);
+            return; 
+        }
+
         setSelectedEggIndex(eggNumber);
 
         // Advance dialogue based on selection
@@ -179,19 +185,20 @@ export default function SelectEgg() {
         const interval = setInterval(() => {
             setBounceState((prev) =>
                 prev.map((state, i) => {
-                    if (!isHovering[i]) return "still";
+                    // Only bounce if hovering AND egg is available
+                    if (!isHovering[i] || !eggs[i].isAvailable) return "still"; 
                     return state === "still" ? "descent" : "still";
                 })
             );
         }, 300);
         return () => clearInterval(interval);
-    }, [isHovering]);
+    }, [isHovering, eggs]);
 
     const getEggSprite = (i) => {
         const egg = eggs[i];
         const state = bounceState[i];
 
-        if (!isHovering[i]) return egg.still;
+        if (!isHovering[i] || !egg.isAvailable) return egg.still;
         if (state === "descent") return egg.descent;
 
         return egg.still;
@@ -201,7 +208,6 @@ export default function SelectEgg() {
     if (isHatching) {
         if (phaseIndex < PHASE_COUNT - 1) {
             // Use the still sprite of the selected egg for all cracking phases
-            // This ensures the correct egg identity is maintained visually.
             currentHatchingSprite = eggs[selectedEggIndex].still;
         } else if (phaseIndex === PHASE_COUNT - 1) {
             // Use the final monster sprite
@@ -236,28 +242,33 @@ export default function SelectEgg() {
                     <>
                         <h2 className="egg-select-title">Select an Egg!</h2>
                         <div className="egg-select-container">
-                            {eggs.map((egg, index) => (
+                            {eggs.map((egg, index) => {
+                                const isLocked = !egg.isAvailable;
+                                return (
                                 <div
-                                    className="egg-container"
+                                    className={`egg-container ${isLocked ? 'egg-locked' : ''}`}
                                     key={index}
-                                    onMouseEnter={() => setIsHovering(prev => {
+                                    // Only allow hover/bounce on unlocked eggs
+                                    onMouseEnter={!isLocked ? () => setIsHovering(prev => {
                                         const arr = [...prev];
                                         arr[index] = true;
                                         return arr;
-                                    })}
-                                    onMouseLeave={() => setIsHovering(prev => {
+                                    }) : null}
+                                    onMouseLeave={!isLocked ? () => setIsHovering(prev => {
                                         const arr = [...prev];
                                         arr[index] = false;
                                         return arr;
-                                    })}
-                                    onClick={() => selectEgg(index)}
+                                    }) : null}
+                                    // Only allow click on unlocked eggs
+                                    onClick={() => !isLocked && selectEgg(index)}
                                 >
-                                    <div className={`egg-fixed-box ${bounceState[index] === "descent" ? "egg-descent" : ""}`}>
+                                    {isLocked && <span className="egg-locked-text">DLC Available!</span>} 
+                                    <div className={`egg-fixed-box ${!isLocked && bounceState[index] === "descent" ? "egg-descent" : ""}`}>
                                         <img src={getEggSprite(index)} alt={egg.name} className="egg-sprite" />
                                     </div>
                                     <span>{egg.name}</span>
                                 </div>
-                            ))}
+                            )})}
                         </div>
                         <div className="action-container">
                             <a onClick={() => navigate("/")} className="egg-select-back">Nevermind</a>
