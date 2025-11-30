@@ -1,6 +1,6 @@
 import "./Shop.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ScreenLayout from "../../components/screenlayout";
 import { useNavigate } from "react-router-dom";
 import TextWriter from "../../utils/TextWriter";
@@ -8,12 +8,21 @@ import { updateLocalStorage } from "../../utils/localStorage";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
 import checkoutAudio from "../../../public/assets/sfx/shop/checkout.mp3";
+import shopAudio from "../../../public/assets/sfx/bg-music/shop/shop.mp3";
 
 export default function Shop() {
 
     const navigate = useNavigate();
     const { advanceDialogue } = useDialogue();
     const checkoutSound = new Audio(checkoutAudio);
+
+    const audioRef = useRef(null);
+
+    const playShopAudioLoop = () => {
+        audioRef.current.loop = true;   // Enable looping
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+    };
 
     const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
     const CHECKOUT_TEXT = "Thank you!";
@@ -91,11 +100,13 @@ export default function Shop() {
     };
 
     useEffect(() => {
+        playShopAudioLoop();
         advanceDialogue("ShopStart");
     }, []);
 
     return (
         <>
+            <audio ref={audioRef} src={shopAudio}></audio>
             <ScreenLayout>
                 <div className="shop-container">
                     <h2 className="shop-title">Shop</h2> 
