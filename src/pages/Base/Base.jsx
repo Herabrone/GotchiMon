@@ -343,9 +343,9 @@ export default function Base() {
                         {showShopButton && (
                             <a onClick={() => {navigate("/shop")}} className="Shop_Button">Shop</a>
                         )}
-                        {showFightButton && (
+                        {/* {showFightButton && (
                             <a onClick={() => {navigate("/fight")}} className="Fight_Button">Fight</a>
-                        )}
+                        )} */}
                     </div>
                 </>
             )}
