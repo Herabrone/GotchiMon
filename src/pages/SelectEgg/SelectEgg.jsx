@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
 
+import egg1 from "../../../public/assets/sprites/egg/egg-1/egg-1.png";
+import egg2 from "../../../public/assets/sprites/egg/egg-2/egg-2.png";
+import egg3 from "../../../public/assets/sprites/egg/egg-3/egg-3.png";
+
 // --- SOUND EFFECTS ---
 import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
 import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
@@ -23,11 +27,10 @@ export default function SelectEgg() {
     const navigate = useNavigate();
 
     const eggs = [
-        { name: "Egg 1", image: "image1" },
-        { name: "Egg 2", image: "image2" },
-        { name: "Egg 3", image: "image3" }
-    ];
-
+        {name: "Egg 1", image: egg1},
+        {name: "Egg 2", image: egg2},
+        {name: "Egg 3", image: egg3}
+    ]
     const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
 
     // --- Hatching state ---
@@ -112,16 +115,12 @@ export default function SelectEgg() {
                 {/* Egg selection UI (only shown before dialogue/hatch) */}
                 {!isDialogueActive && !isHatching && (
                     <>
-                        <h1 className="egg-select-title">Select an Egg!</h1>
-
+                        <h2 className="egg-select-title">Select an Egg!</h2>
                         <div className="egg-select-container">
                             {eggs.map((egg) => (
-                                <div
-                                    key={egg.name}
-                                    className="egg-container"
-                                    onClick={() => selectEgg(1)}
-                                >
-                                    <span>{egg.image}</span>
+                                <div className="egg-container" onClick={() => selectEgg(1)}>
+                                    {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
+                                    <img src={egg.image}/>
                                     <span>{egg.name}</span>
                                 </div>
                             ))}
