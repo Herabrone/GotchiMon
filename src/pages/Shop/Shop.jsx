@@ -85,15 +85,14 @@ export default function Shop() {
             const currentCoins = parseInt(coins);
             if (currentCoins >= totalPrice) {
                 const newCoinsAmount = currentCoins - totalPrice;
-                setCoins(newCoinsAmount.toString());
-                updateLocalStorage("coins", newCoinsAmount.toString());
+                setCoins(newCoinsAmount);
+                updateLocalStorage("coins", newCoinsAmount);
                 
                 // Update food count in localStorage
                 const currentFood = parseInt(localStorage.getItem("food") || "0");
                 const newFoodAmount = currentFood + totalFoodPurchased;
                 updateLocalStorage("food", newFoodAmount.toString());
             } else {
-                setDialogueText(NOT_ENOUGH_COINS_TEXT);
                 return;
             }
 
