@@ -169,7 +169,41 @@ const dialogueTree = {
             {text: "Back to Base", action: "ReturnToBase", next: null}
         ],
     },
-    
+
+    // After first Evolution
+    AfterFirstEvolution_01: {
+        text: "YOU: Perfect you’ve grown so fast! ",
+        options: [
+            {text: "Continue", next: "AfterFirstEvolution_02"}
+        ],
+    },
+    AfterFirstEvolution_02: {
+        text: "YOU: Hungry again? I just fed you!",
+        options: [
+            {text: "Continue", next: "AfterFirstEvolution_03"}
+        ],
+    },
+    AfterFirstEvolution_03: {
+        text: "YOU: Okay fine… this is getting expensive though",
+        options: [
+            {text: "Continue", action: "goToEmptyShop", next: "AfterFirstEvolution_04"}
+        ],
+    },
+    AfterFirstEvolution_04: {
+        text: "YOU: Well that's too bad, looks like they need more time to get more food",
+        options: [
+            {text: "Continue", action: "ReturnToBase", next: "AfterFirstEvolution_05"}
+        ],
+    },
+    AfterFirstEvolution_05: {
+        text: "YOU: In the meantime lets make good on my initial investment! Lets go and fight!",
+        options: [
+            {text: "Continue", action: "FirstFight", next: null}
+        ],
+    },
+
+
+
 };
 
 export default dialogueTree;
