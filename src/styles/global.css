@@ -30,6 +30,11 @@ a:hover {
     text-decoration: underline;
 }
 
+img {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
 .page-container {
     max-width: 100vw;
     max-height: 100vh;
@@ -45,3 +50,4 @@ a:hover {
     display: inline-block;
     border-radius: 6px;
 }
+

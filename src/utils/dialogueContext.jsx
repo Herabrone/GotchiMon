@@ -14,6 +14,7 @@ export function DialogueProvider({ children }) {
 
     const advanceDialogue = (nextNode) => {
         if (nextNode) {
+            setIsDialogueActive(true);
             setCurrentNode(nextNode);  
         } else {
             setIsDialogueActive(false);

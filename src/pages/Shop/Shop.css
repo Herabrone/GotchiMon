@@ -1,0 +1,106 @@
+.shop-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-title {
+    text-align: center;
+    font-size: 3em;
+}
+
+.shop-coins-container {
+    display: flex;
+    align-items: baseline;
+}
+
+.shop-grid-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.shop-grid-item:hover {
+    transform: translateY(-5px);
+}
+
+.shop-grid-item img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.shop-grid-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.shop-cart-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 45%;
+    margin-top: 20px;
+    padding-left: 20px;
+}
+
+.shop-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.shop-cart-item {
+    cursor: pointer;
+}
+
+.shop-cart-item:hover {
+    transform: translateY(-5px);
+}
+
+.sold-out {
+    filter: brightness(0.5);
+}
+
+.shop-cart-item img {
+    width: 30px;
+}
+
+.cart-total-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.shop-checkout {
+    font-size: 2em;
+}
+
+.shop-bottom-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.coin-sprite {
+  width: 16px;
+  height: 16px;
+  background-image: url('../../../public/assets/sprites/coin/MonedaD.png');
+  animation: walk 0.6s steps(4) infinite;
+}
+
+@keyframes walk {
+  from { background-position: 0 0; }
+  to { background-position: -64px 0px; }
+}
