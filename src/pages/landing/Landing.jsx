@@ -31,15 +31,18 @@ export default function Landing() {
     };
 
     function initializeLocalStorage() {
-        // initialize store
         localStorage.clear();
+
+        // initializing store
         localStorage.setItem("shopItems", JSON.stringify(shopItems));
+
+        // initializing coins
         localStorage.setItem("coins", JSON.stringify(coins));
 
-        //initializing food
+        // initializing food
         localStorage.setItem("food", JSON.stringify(1));
         
-        //initializing monster state
+        // initializing monster state
         localStorage.setItem("monster_state", JSON.stringify(1));
     }
 
