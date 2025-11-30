@@ -179,7 +179,7 @@ const dialogueTree = {
 
     // SECOND EVOLUTION (Good/Bad path)
     ThirdFeeding_01: {
-        text: "YOU: Alright, time to eat!",
+        text: "YOU: Wow! You sure ate that really quickly!",
         options: [
             {text: "Continue", action: "secondEvolution", next: null}
         ],
