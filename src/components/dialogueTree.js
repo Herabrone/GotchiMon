@@ -153,7 +153,7 @@ const dialogueTree = {
         ],
     },
     AfterFirstEvolution_04: {
-        text: "YOU: Well that's too bad, looks like they need more time to get more food.",
+        text: "YOU: Well that's too bad, looks like we don't have any coins to buy anything!",
         options: [
             {text: "Continue", action: "ReturnToBase", next: "AfterFirstEvolution_05"}
         ],
