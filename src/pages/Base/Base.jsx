@@ -127,17 +127,6 @@ export default function Base() {
         }
     }, [currentNode, showShopButton]);
 
-    // Get the monster sprite based on state
-    const getMonsterSprite = () => {
-        switch(monsterState) {
-            case 1:
-                return monsterState1;
-            // can add more cases for different monster states in the futuer
-            default:
-                return monsterState1;
-        }
-    };
-
     const handleDialogueAction = (action) => {
         if (action === 'firstEvolution') {
             advanceDialogue('Evolution1');
@@ -165,7 +154,7 @@ export default function Base() {
                     </div>
 
                     <div className="monster-display">
-                        <img src={getMonsterSprite()} alt="Your Gotchimon" className="monster-sprite" />
+                        <div className="slime-idle-sprite"></div>
                     </div>
 
                     {isVisible && (
