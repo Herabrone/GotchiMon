@@ -71,7 +71,7 @@ export default function Landing() {
             <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" />
 
             <div className="landing-container">
-                <h2 className="gotchimon-title">gotchimon</h2>
+                <h2 className="gotchimon-title">Gotchimon</h2>
 
                 {/* Show controls only when dialogue is not active */}
                 {!isDialogueActive && (
