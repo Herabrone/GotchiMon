@@ -21,7 +21,6 @@ export default function Final() {
     };
 
     useEffect(() => {
-        console.log(good);
         if (good) {
             advanceDialogue("FinalStartG");
         } else {
