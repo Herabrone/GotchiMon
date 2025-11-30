@@ -7,11 +7,14 @@ import Dialogue from '../../components/Dialogue';
 import { useDialogue } from "../../utils/dialogueContext";
 
 // Import monster sprites
-import monsterState1 from "../../../public/assets/sprites/first_evo/Blue_Slime.png";
+import monsterState1Sprite from '../../../public/assets/sprites/first_evo/Blue_Slime.png';
+import monsterState2Sprite from '../../../public/assets/sprites/second_evo/Dude_Monster_Idle_4.png';
+import goodMonsterSprite from '../../../public/assets/sprites/third_evo/Good_monster_Idle.png';
+import badMonsterSprite from '../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png';
+
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3'; 
 
 export default function Base() {
-
     const navigate = useNavigate();
     const { currentNode, isDialogueActive, setIsDialogueActive, advanceDialogue } = useDialogue();
     const [isVisible, setIsVisible] = useState(false);
@@ -21,6 +24,9 @@ export default function Base() {
     const [hasFirstFed, setHasFirstFed] = useState(false);
     const [showShopButton, setShowShopButton] = useState(false);
     const [hasSecondFed, setHasSecondFed] = useState(false);
+    const [hasThirdFed, setHasThirdFed] = useState(false);
+    const [showFightButton, setShowFightButton] = useState(false);
+    const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
 
     const audioRef = useRef(null); 
 
@@ -50,7 +56,6 @@ export default function Base() {
         };
     }, []); 
 
-
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
         const foodCount = localStorage.getItem("food");
@@ -70,7 +75,30 @@ export default function Base() {
         
         const secondFedStatus = localStorage.getItem("hasSecondFed");
         setHasSecondFed(secondFedStatus ? JSON.parse(secondFedStatus) : false);
+        
+        const thirdFedStatus = localStorage.getItem("hasThirdFed");
+        setHasThirdFed(thirdFedStatus ? JSON.parse(thirdFedStatus) : false);
+        
+        const fightButtonStatus = localStorage.getItem("showFightButton");
+        setShowFightButton(fightButtonStatus ? JSON.parse(fightButtonStatus) : false);
     }, []);
+
+    // Handle returning from evolution page - show appropriate dialogue
+    useEffect(() => {
+        if (monsterState === 2 && !hasReturnedFromEvolution) {
+            const justEvolved = localStorage.getItem('justEvolved');
+            if (justEvolved === 'true') {
+                localStorage.removeItem('justEvolved');
+                setHasReturnedFromEvolution(true);
+                
+                // Show "after first evolution" dialogue
+                setTimeout(() => {
+                    advanceDialogue('AfterFirstEvolution_01');
+                    setIsDialogueActive(true);
+                }, 500);
+            }
+        }
+    }, [monsterState, hasReturnedFromEvolution, advanceDialogue, setIsDialogueActive]);
 
     // If we arrive on this page and the dialogue node was set to Base1,
     // make sure the dialogue UI is activated so the Base1 text appears.
@@ -81,42 +109,49 @@ export default function Base() {
     }, [currentNode, isDialogueActive, setIsDialogueActive]);
 
     const Feed = () => {
-
         if (food > 0) {
             setFood(food - 1);
             localStorage.setItem("food", (food - 1).toString());
-            setIsVisible(true); // Show the div
+            setIsVisible(true);
             setTimeout(() => {
-            setIsVisible(false); // Hide the div after 1000ms (1 second)
+                setIsVisible(false);
             }, 1000);
 
-            // Check if this is the first feeding
+            // FIRST FEEDING - Initial feed after hatching
             if (!hasFirstFed) {
                 setHasFirstFed(true);
                 localStorage.setItem("hasFirstFed", "true");
                 
-                // Trigger FirstFeeding dialogue after a short delay
                 setTimeout(() => {
                     advanceDialogue('FirstFeeding_01');
                     setIsDialogueActive(true);
                 }, 1500);
             }
-            // Check if this is the second feeding (after shop visit)
-            else if (hasFirstFed && !hasSecondFed) {
+            // SECOND FEEDING - Triggers first evolution (baby -> dude)
+            else if (hasFirstFed && !hasSecondFed && monsterState === 1) {
                 setHasSecondFed(true);
                 localStorage.setItem("hasSecondFed", "true");
                 
-                // Trigger SecondFeeding dialogue after a short delay
                 setTimeout(() => {
                     advanceDialogue('SecondFeeding_01');
                     setIsDialogueActive(true);
                 }, 1500);
             }
-
-            //TODO: Add feeding animation and sound effect here
+            // THIRD FEEDING - Triggers second evolution (dude -> good/bad)
+            else if (monsterState === 2 && !hasThirdFed) {
+                setHasThirdFed(true);
+                localStorage.setItem("hasThirdFed", "true");
+                
+                // Set monster alignment based on last purchased food
+                const lastFoodType = localStorage.getItem('last_food_type') || 'good';
+                localStorage.setItem('monster_alignment', lastFoodType);
+                
+                setTimeout(() => {
+                    advanceDialogue('ThirdFeeding_01');
+                    setIsDialogueActive(true);
+                }, 1500);
+            }
         }
-
-        
     };
 
     // Show shop button after FirstFeeding_02 dialogue
@@ -127,22 +162,71 @@ export default function Base() {
         }
     }, [currentNode, showShopButton]);
 
+    // Show fight button after AfterFirstEvolution_05 dialogue
+    useEffect(() => {
+        if (currentNode === 'AfterFirstEvolution_05' && !showFightButton) {
+            setShowFightButton(true);
+            localStorage.setItem("showFightButton", "true");
+        }
+    }, [currentNode, showFightButton]);
+
     const handleDialogueAction = (action) => {
         if (action === 'firstEvolution') {
+            localStorage.setItem('justEvolved', 'true');
+            // Set dialogue to Evolution1 before navigating
             advanceDialogue('Evolution1');
-            setIsDialogueActive(true);
             setTimeout(() => {
                 navigate('/evolution');
             }, 100);
+        } else if (action === 'secondEvolution') {
+            // Set dialogue to Evolution2 before navigating
+            advanceDialogue('Evolution2');
+            setTimeout(() => {
+                navigate('/evolution');
+            }, 100);
+        } else if (action === 'returnToBase') {
+            // Already at base, just close dialogue
+            setIsDialogueActive(false);
+        } else if (action === 'FirstFight') {
+            navigate('/fight');
         }
     };
 
+    // Get the appropriate sprite based on monster state
+    const getMonsterSprite = () => {
+        switch(monsterState) {
+            case 1:
+                return 'slime-idle-sprite'; // CSS animation class
+            case 2:
+                return monsterState2Sprite;
+            case 3:
+                const alignment = localStorage.getItem('monster_alignment') || 'good';
+                return alignment === 'good' ? goodMonsterSprite : badMonsterSprite;
+            default:
+                return 'slime-idle-sprite';
+        }
+    };
+
+    const renderMonster = () => {
+        if (monsterState === 1) {
+            return <div className="slime-idle-sprite"></div>;
+        } else {
+            return <img src={getMonsterSprite()} alt="Gotchimon" className="monster-sprite-img" />;
+        }
+    };
 
     return (
         <ScreenLayout>
             <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" /> 
             
-            {(!isDialogueActive || currentNode === 'FirstFeeding_01' || currentNode === 'FirstFeeding_02') && (
+            {(!isDialogueActive || 
+              currentNode === 'FirstFeeding_01' || 
+              currentNode === 'FirstFeeding_02' ||
+              currentNode === 'AfterFirstEvolution_01' ||
+              currentNode === 'AfterFirstEvolution_02' ||
+              currentNode === 'AfterFirstEvolution_03' ||
+              currentNode === 'AfterFirstEvolution_04' ||
+              currentNode === 'AfterFirstEvolution_05') && (
                 <>
                     <div className="resources-container">
                         <div className="food-display">
@@ -154,7 +238,7 @@ export default function Base() {
                     </div>
 
                     <div className="monster-display">
-                        <div className="slime-idle-sprite"></div>
+                        {renderMonster()}
                     </div>
 
                     {isVisible && (
@@ -166,7 +250,10 @@ export default function Base() {
                     <div className="action-buttons">
                         <a className="Feed_Button" onClick={Feed}>Feed</a>
                         {showShopButton && (
-                            <a onClick={()=> {navigate("/shop")}} className="Shop_Button">Shop</a>
+                            <a onClick={() => {navigate("/shop")}} className="Shop_Button">Shop</a>
+                        )}
+                        {showFightButton && (
+                            <a onClick={() => {navigate("/fight")}} className="Fight_Button">Fight</a>
                         )}
                     </div>
                 </>
@@ -176,5 +263,5 @@ export default function Base() {
             <Dialogue onAction={handleDialogueAction} />
             
         </ScreenLayout>
-    )
-};
+    );
+}

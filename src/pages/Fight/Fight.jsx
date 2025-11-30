@@ -5,6 +5,7 @@ import Dialogue from '../../components/Dialogue';
 import { useDialogue } from "../../utils/dialogueContext";
 import { updateLocalStorage } from '../../utils/localStorage';
 import './Fight.css';
+import { shopItems2 } from '../../data/ShopData';
 
 export default function Fight() {
     const navigate = useNavigate();
@@ -68,6 +69,7 @@ export default function Fight() {
         } else if (action == "RewardCoin") {
             const currCoins = Number(localStorage.getItem("coins"));
             updateLocalStorage("coins", currCoins+1);
+            updateLocalStorage("shopItems", shopItems2);
         }
     };
 
