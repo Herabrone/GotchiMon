@@ -1,9 +1,9 @@
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
-import { useNavigate } from "react-router-dom"; // KEEP ONLY THIS IMPORT
+import { useNavigate } from "react-router-dom"; 
 import ScreenLayout from "../../components/screenlayout";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { updateLocalStorage } from "../../utils/localStorage";
 
 // --- EGG 1 ---
@@ -18,7 +18,6 @@ import egg2Descent from "../../../public/assets/sprites/egg/egg-2/egg-2-bounce-d
 import egg3 from "../../../public/assets/sprites/egg/egg-3/egg-3.png";
 import egg3Descent from "../../../public/assets/sprites/egg/egg-3/egg-3-bounce-descent.png";
 
-// --- SOUND EFFECTS ---
 import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
 import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
 
@@ -32,9 +31,38 @@ const eggPhases = [
     "/assets/sprites/first_evo/Blue_Slime.png"
 ];
 
+const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3';
+
 export default function SelectEgg() {
     const navigate = useNavigate();
     const { advanceDialogue, setIsDialogueActive, isDialogueActive, currentNode } = useDialogue();
+
+    const audioRef = useRef(null); 
+    
+    useEffect(() => {
+        const audio = audioRef.current;
+
+        const playMusic = () => {
+            if (audio) {
+                audio.loop = true;
+                audio.volume = 0.5; 
+                audio.currentTime = 0; 
+
+                audio.play().catch(e => {
+                    console.warn("Select Egg Page BGM failed to play automatically:", e);
+                });
+            }
+        };
+
+        playMusic();
+
+        return () => {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        };
+    }, []); 
 
     const eggs = [
         { name: "Egg 1", still: egg1, descent: egg1Descent },
@@ -73,7 +101,6 @@ export default function SelectEgg() {
         }, 50); 
     };
 
-    // --- SPACE Press for cracking logic ---
     const handleKey = useCallback((e) => {
         // Only run if hatching and space is pressed
         if (!isHatching || e.code !== "Space") return;
@@ -108,7 +135,6 @@ export default function SelectEgg() {
                     }
 
                     if (next >= eggPhases.length) {
-                        // Already handled above
                         return prevPhase;
                     }
 
@@ -131,7 +157,6 @@ export default function SelectEgg() {
 
     // When dialogue advances to Base1, navigate to the base page
     useEffect(() => {
-        // currentNode is now available here.
         if (currentNode === 'Base1') {
             navigate('/base');
         }
@@ -175,6 +200,7 @@ export default function SelectEgg() {
 
     return (
         <ScreenLayout>
+            <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" /> 
             <div className={`page-container ${shake ? "shake" : ""}`}>
                 {/* --- HATCHING SCREEN --- */}
                 {isHatching && (
