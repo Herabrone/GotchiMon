@@ -1,8 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
 
-import { useNavigate } from "react-router-dom";
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
 
@@ -49,7 +49,7 @@ export default function SelectEgg() {
     const [isHovering, setIsHovering] = useState([false, false, false]);
     const [bounceState, setBounceState] = useState(["still", "still", "still"]);
 
-    const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
+    const { advanceDialogue, setIsDialogueActive, isDialogueActive, currentNode } = useDialogue();
 
     // --- Hatching state ---
     const [isHatching, setIsHatching] = useState(false);
@@ -86,7 +86,6 @@ export default function SelectEgg() {
         (e) => {
             if (!isHatching) return;
             if (e.code !== "Space") return;
-            if (phaseIndex >= eggPhases.length - 1) return;
 
             setShake(true);
             setTimeout(() => setShake(false), 100);
@@ -105,11 +104,14 @@ export default function SelectEgg() {
 
                         if (next === eggPhases.length - 1) {
                             new Audio(hatchSound).play();
+                            // Egg fully hatched - wait 2 seconds then navigate to base
+                            setTimeout(() => {
+                                setIsHatching(false);
+                                navigate('/base');
+                            }, 2000);
                         }
 
                         if (next >= eggPhases.length) {
-                            setIsHatching(false);
-                            setTimeout(() => navigate("/base"), 800);
                             return prevPhase;
                         }
 
@@ -131,8 +133,16 @@ export default function SelectEgg() {
         return () => window.removeEventListener("keydown", handleKey);
     }, [isHatching, handleKey]);
 
+    // When dialogue advances to Base1, navigate to the base page
+    useEffect(() => {
+        if (currentNode === 'Base1') {
+            navigate('/base');
+        }
+    }, [currentNode, navigate]);
+
     const handleDialogueAction = (action) => {
         if (action === "HatchEgg") {
+            setIsDialogueActive(false);
             setIsHatching(true);
             setPhaseIndex(0);
             setPressCount(0);
