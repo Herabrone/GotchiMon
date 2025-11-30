@@ -9,6 +9,7 @@ import SelectEgg from '../pages/SelectEgg/SelectEgg';
 import Evolution from '../pages/Evolution/Evolution';
 import Fight from '../pages/Fight/Fight';
 import Shop from '../pages/Shop/Shop';
+import Final from '../pages/Final/Final';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path={"/evolution"} element={<Evolution/>}/>
             <Route path="/fight" element={<Fight />} />
             <Route path={"/shop"} element={<Shop/>}/>
+            <Route path={"/final"} element={<Final/>}/>
           </Routes>
         </BrowserRouter>
       </DialogueProvider>

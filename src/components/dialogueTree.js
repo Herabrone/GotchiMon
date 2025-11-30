@@ -239,6 +239,12 @@ const dialogueTree = {
             {text: "Ok", action: "Ok", next: null}
         ],
     },
+    ShopNotEnoughCoins: {
+        text: "Please make sure you have enough coins!",
+        options: [
+            {text: "Ok", action: "Ok", next: null}
+        ],
+    },
     ShopComplete: {
         text: "Thank you for shopping! Enjoy :)",
         options: [
@@ -331,6 +337,69 @@ const dialogueTree = {
     },
     //Gotchimon escapes?
 
+    // Final dialogue nodes
+    FinalStartG: {
+        text: "Wow you evolve fast!",
+        options: [
+            {text: "Continue", next: "FinalResponseG"}
+        ]
+    },
+    FinalResponseG: {
+        text: "GotchiMon: I'm ready to go off on my own!",
+        options: [
+            {text: "Continue", next: "FinalEndG"}
+        ]
+    },
+    FinalEndG: {
+        text: "Thank you for playing!",
+        options: [
+            {text: "Continue", action: "BackToStart", next: null}
+        ]
+    },
+
+    FinalStartB_0: {
+        text: "Hey… are you okay? You seem…",
+        options: [
+            {text: "Continue", next: "FinalStartB_1"}
+        ]
+    },
+    FinalStartB_1: {
+        text: "Different...",
+        options: [
+            {text: "Continue", next: "FinalResponseB_0"}
+        ]
+    },
+    FinalResponseB_0: {
+        text: "GotchiMon: What...",
+        options: [
+            {text: "Continue", next: "FinalResponseB_1"}
+        ]
+    },
+    FinalResponseB_1: {
+        text: "GotchiMon: What have you been feeding me?!?!",
+        options: [
+            {text: "Continue", next: "FinalResponseB_2"}
+        ]
+    },
+    FinalResponseB_2: {
+        text: "GotchiMon: My...",
+        options: [
+            {text: "Continue", next: "FinalResponseB_3"}
+        ]
+    },
+    FinalResponseB_3: {
+        text: "GotchiMon: Brothers?!?!",
+        options: [
+            {text: "Continue", next: "FinalEndB"}
+        ]
+    },
+    FinalEndB: {
+        text: "...",
+        options: [
+            {text: "Continue", action: "BackToStart", next: null}
+        ]
+    },
+    
 };
 
 export default dialogueTree;
