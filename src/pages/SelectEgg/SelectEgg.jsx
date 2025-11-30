@@ -31,6 +31,8 @@ export default function SelectEgg() {
         {name: "Egg 2", image: egg2},
         {name: "Egg 3", image: egg3}
     ]
+    const [selectedEggIndex, setSelectedEggIndex] = useState(0);
+
     const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
 
     // --- Hatching state ---
@@ -39,10 +41,21 @@ export default function SelectEgg() {
     const [shake, setShake] = useState(false);
 
     const selectEgg = (eggNumber) => {
-        if (eggNumber === 1) {
+        setSelectedEggIndex(eggNumber);
+        if (eggNumber === 0) { // egg 1
             advanceDialogue("EggSelected1_0");
-            setIsDialogueActive(true);
         }
+
+        if (eggNumber === 1) { // egg 2
+            advanceDialogue("EggSelected2_0");
+        }
+
+        if (eggNumber === 2) { // egg 3
+            advanceDialogue("EggSelected3_0");
+        }
+
+        
+        setIsDialogueActive(true);
     };
 
     // ----------------------------------------------------------
@@ -105,10 +118,10 @@ export default function SelectEgg() {
                     <div className="egg-hatching-container">
                         <img
                             src={eggPhases[phaseIndex]}
-                            className="egg-hatching-sprite"
+                            className="egg-hatching-sprite selected-egg-img"
                             alt="egg hatching"
                         />
-                        <p className="hatch-instruction">Press SPACE to hatch…</p>
+                        <p className="hatch-instructions">Press SPACE to hatch…</p>
                     </div>
                 )}
 
@@ -117,8 +130,8 @@ export default function SelectEgg() {
                     <>
                         <h2 className="egg-select-title">Select an Egg!</h2>
                         <div className="egg-select-container">
-                            {eggs.map((egg) => (
-                                <div className="egg-container" onClick={() => selectEgg(1)}>
+                            {eggs.map((egg, index) => (
+                                <div className="egg-container" onClick={() => selectEgg(index)}>
                                     {/*have all eggs be option 1 for now we can change the number to indicate the different paths the users can go down*/}
                                     <img src={egg.image}/>
                                     <span>{egg.name}</span>
@@ -133,6 +146,10 @@ export default function SelectEgg() {
                         </div>
                     </>
                 )}
+
+                {isDialogueActive &&
+                    <img src={eggs[selectedEggIndex].image} className="selected-egg-img"/>
+                }
 
                 {/* Dialogue (trigger HatchEgg action) */}
                 <Dialogue onAction={handleDialogueAction} />

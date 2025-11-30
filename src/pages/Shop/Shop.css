@@ -15,7 +15,6 @@
 }
 
 .shop-grid-item img {
-    image-rendering: pixelated;
     width: 100px;
 }
 
@@ -47,7 +46,6 @@
 }
 
 .shop-cart-item img {
-    image-rendering: pixelated;
     width: 30px;
 }
 

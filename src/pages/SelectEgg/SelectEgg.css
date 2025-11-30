@@ -10,7 +10,6 @@
     width: 100px;
     margin: 0 auto;
     margin-bottom: 20px;
-    image-rendering: pixelated;
 }
 
 .egg-container {
@@ -56,12 +55,23 @@
 .egg-hatching-container {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    flex-direction: column;
+    text-align: center;
 }
 
 .egg-hatching-sprite {
     width: 200px;
     height: auto;
     transition: transform 0.2s ease;
-    image-rendering: pixelated;
+}
+
+.hatch-instructions {
+    margin-top: 50px;
+}
+
+.selected-egg-img {
+    display: block;
+    margin: 0 auto;
+    margin-top: 15%;
+    width: 300px;
 }
