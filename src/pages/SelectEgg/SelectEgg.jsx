@@ -23,15 +23,13 @@ const eggPhases = [
     "/assets/sprites/first_evo/Blue_Slime.png"
 ];
 
-const hatchSounds = [crack1, hatchSound];
-
 export default function SelectEgg() {
     const navigate = useNavigate();
 
     const eggs = [
-        {name: "Egg 1", image: egg1},
-        {name: "Egg 2", image: egg2},
-        {name: "Egg 3", image: egg3}
+        { name: "Egg 1", image: egg1 },
+        { name: "Egg 2", image: egg2 },
+        { name: "Egg 3", image: egg3 }
     ];
     const [selectedEggIndex, setSelectedEggIndex] = useState(0);
 
@@ -46,7 +44,6 @@ export default function SelectEgg() {
     const [pressCount, setPressCount] = useState(0);
     const [pressThreshold, setPressThreshold] = useState(0);
 
-    // Helper to generate random number between min and max (inclusive)
     const getRandomThreshold = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
     const selectEgg = (eggNumber) => {
@@ -57,13 +54,20 @@ export default function SelectEgg() {
         setIsDialogueActive(true);
     };
 
-    // ----------------------------------------------------------
-    // SPACEBAR HANDLER
-    // ----------------------------------------------------------
     const handleKey = useCallback(
         (e) => {
             if (!isHatching) return;
             if (e.code !== "Space") return;
+
+            // Prevent further input if final phase (blue slime) is showing
+            if (phaseIndex >= eggPhases.length - 1) return;
+
+            // Small shake for every press
+            setShake(true);
+            setTimeout(() => setShake(false), 100);
+
+            // Play crack sound for feedback
+            new Audio(crack1).play();
 
             setPressCount((prevCount) => {
                 const newCount = prevCount + 1;
@@ -72,23 +76,23 @@ export default function SelectEgg() {
                     setPhaseIndex((prevPhase) => {
                         const nextPhase = prevPhase + 1;
 
-                        // Play correct audio
-                        const audio = new Audio(hatchSounds[prevPhase]);
-                        audio.play();
+                        // Bigger shake on phase advance
+                        setShake(true);
+                        setTimeout(() => setShake(false), 300);
 
-                        // Shake the screen on cracks
-                        if (prevPhase < eggPhases.length - 1) {
-                            setShake(true);
-                            setTimeout(() => setShake(false), 300);
+                        // Play hatch sound only for the final phase (blue slime)
+                        if (nextPhase === eggPhases.length - 1) {
+                            new Audio(hatchSound).play();
                         }
 
-                        // Finished all hatch phases → navigate
+                        // Finished all phases → stop hatching & navigate
                         if (nextPhase >= eggPhases.length) {
+                            setIsHatching(false);
                             setTimeout(() => navigate("/base"), 800);
                             return prevPhase;
                         }
 
-                        // Reset press count and set new threshold for next phase
+                        // Reset press count and random threshold for next phase
                         setPressCount(0);
                         setPressThreshold(getRandomThreshold(10, 20));
 
@@ -99,10 +103,9 @@ export default function SelectEgg() {
                 return newCount;
             });
         },
-        [isHatching, pressThreshold, navigate]
+        [isHatching, pressThreshold, phaseIndex, navigate]
     );
 
-    // Add/remove key event listener
     useEffect(() => {
         if (!isHatching) return;
 
@@ -110,22 +113,18 @@ export default function SelectEgg() {
         return () => window.removeEventListener("keydown", handleKey);
     }, [isHatching, handleKey]);
 
-    // ----------------------------------------------------------
-    // Dialogue actions (trigger hatch)
-    // ----------------------------------------------------------
     const handleDialogueAction = (action) => {
         if (action === "HatchEgg") {
             setIsHatching(true);
             setPhaseIndex(0);
             setPressCount(0);
-            setPressThreshold(getRandomThreshold(10, 20)); // Initialize first phase threshold
+            setPressThreshold(getRandomThreshold(10, 20)); // initialize first phase threshold
         }
     };
 
     return (
         <ScreenLayout>
             <div className={`page-container ${shake ? "shake" : ""}`}>
-                {/* Render hatching animation */}
                 {isHatching && (
                     <div className="egg-hatching-container">
                         <img
@@ -135,25 +134,23 @@ export default function SelectEgg() {
                         />
                         <p className="hatch-instructions">
                             {phaseIndex < eggPhases.length - 1
-                                ? "Press SPACE to hatch…"
+                                ? `Keep pressing SPACE to hatch… (${pressCount}/${pressThreshold})`
                                 : "Your Gotchimon hatched!"}
                         </p>
                     </div>
                 )}
 
-                {/* Egg selection UI (only shown before dialogue/hatch) */}
                 {!isDialogueActive && !isHatching && (
                     <>
                         <h2 className="egg-select-title">Select an Egg!</h2>
                         <div className="egg-select-container">
                             {eggs.map((egg, index) => (
-                                <div className="egg-container" onClick={() => selectEgg(index)}>
+                                <div className="egg-container" onClick={() => selectEgg(index)} key={index}>
                                     <img src={egg.image} alt={egg.name} />
                                     <span>{egg.name}</span>
                                 </div>
                             ))}
                         </div>
-
                         <div className="action-container">
                             <a onClick={() => navigate("/")} className="egg-select-back">
                                 Nevermind
@@ -162,11 +159,10 @@ export default function SelectEgg() {
                     </>
                 )}
 
-                {isDialogueActive && (
+                {isDialogueActive && !isHatching && (
                     <img src={eggs[selectedEggIndex].image} className="selected-egg-img" />
                 )}
 
-                {/* Dialogue (trigger HatchEgg action) */}
                 <Dialogue onAction={handleDialogueAction} />
             </div>
         </ScreenLayout>
