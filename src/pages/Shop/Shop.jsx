@@ -116,6 +116,9 @@ export default function Shop() {
 
     useEffect(() => {
         playShopAudioLoop();
+
+        // Check if we already ran ShopStart before
+        const hasRun = localStorage.getItem("hasRunShopStart");
         
         // Check if visiting empty shop (after first evolution)
         const visitingEmptyShop = localStorage.getItem('visitingEmptyShop');
@@ -125,8 +128,9 @@ export default function Shop() {
             setTimeout(() => {
                 advanceDialogue('AfterFirstEvolution_04');
             }, 500);
-        } else {
+        } else if (!hasRun) {
             advanceDialogue("ShopStart");
+            localStorage.setItem("hasRunShopStart", "true");
         }
     }, []);
 
