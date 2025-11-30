@@ -32,13 +32,8 @@ export default function Evolution() {
         const savedState = JSON.parse(localStorage.getItem('monster_state')) || 1;
         setMonsterState(savedState);
         
-        console.log('Evolution page loaded. Monster state:', savedState);
-        console.log('Current dialogue node:', currentNode);
-        console.log('Is dialogue active?', isDialogueActive);
-        
         // Make sure dialogue is active when we arrive
         if (!isDialogueActive) {
-            console.log('Activating dialogue...');
             setIsDialogueActive(true);
         }
         
@@ -71,17 +66,14 @@ export default function Evolution() {
 
     // Trigger evolution when dialogue reaches Evolution1_0 or Evolution2_0
     useEffect(() => {
-        console.log('Current node changed to:', currentNode);
         
         if ((currentNode === 'Evolution1_0' || currentNode === 'Evolution2_0') && !hasEvolved) {
-            console.log('Triggering evolution at node:', currentNode);
             setHasEvolved(true);
             
             // Play evolve sound
             if (evolveAudioRef.current) {
                 evolveAudioRef.current.volume = 0.5;
                 evolveAudioRef.current.play().catch(() => {
-                    console.log('Could not play evolve sound');
                 });
             }
             
@@ -94,7 +86,6 @@ export default function Evolution() {
 
     const evolveMonster = () => {
         const newState = monsterState + 1;
-        console.log('Evolving! Old state:', monsterState, '→ New state:', newState);
         
         // Stop evolve sound
         if (evolveAudioRef.current) {
@@ -106,7 +97,6 @@ export default function Evolution() {
         if (successAudioRef.current) {
             successAudioRef.current.volume = 0.5;
             successAudioRef.current.play().catch(() => {
-                console.log('Could not play success sound');
             });
         }
         
@@ -114,13 +104,11 @@ export default function Evolution() {
             // First evolution: baby -> dude
             setCurrentSprite(dudeIdle);
             setUseAnimatedSprite(true); // Dude uses CSS animation
-            console.log('Evolved to Dude Monster');
         } else if (newState === 3) {
             // Second evolution: dude -> good/bad
             const alignment = localStorage.getItem('monsterAlignment') || 'good';
             setCurrentSprite(alignment.includes("good") ? goodMonster : badMonster);
             setUseAnimatedSprite(true); // Final forms use CSS animation
-            console.log('Evolved to final form:', alignment);
         }
         
         // Save new state
@@ -139,10 +127,7 @@ export default function Evolution() {
 
     // Handle dialogue actions
     const handleDialogueAction = (action) => {
-        console.log('Dialogue action received:', action);
-        
         if (action === 'returnToBase') {
-            console.log('Returning to base...');
             navigate('/base');
         }
     };
