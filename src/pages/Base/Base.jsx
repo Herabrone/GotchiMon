@@ -13,6 +13,7 @@ import goodMonsterSprite from '../../../public/assets/sprites/third_evo/Good_mon
 import badMonsterSprite from '../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png';
 
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3'; 
+const EAT_SOUND_SRC = '/../../../public/assets/sfx/feed/eat.mp3'; 
 
 export default function Base() {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function Base() {
     const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
 
     const audioRef = useRef(null); 
+    const eatAudioRef = useRef(null);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -116,6 +118,12 @@ export default function Base() {
             setTimeout(() => {
                 setIsVisible(false);
             }, 1000);
+
+            if (eatAudioRef.current) {
+                eatAudioRef.current.currentTime = 0;
+                eatAudioRef.current.volume = 1.0;
+                eatAudioRef.current.play().catch(e => console.error("Error playing SFX:", e));
+            }
 
             // FIRST FEEDING - Initial feed after hatching
             if (!hasFirstFed) {
@@ -218,6 +226,7 @@ export default function Base() {
     return (
         <ScreenLayout>
             <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" /> 
+            <audio ref={eatAudioRef} src={EAT_SOUND_SRC} preload="auto" />
             
             {(!isDialogueActive || 
               currentNode === 'FirstFeeding_01' || 
