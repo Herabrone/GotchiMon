@@ -11,6 +11,13 @@ export default function Base() {
     const navigate = useNavigate();
     const { currentNode, isDialogueActive, setIsDialogueActive } = useDialogue();
     const [isVisible, setIsVisible] = useState(false);
+    const [food, setFood] = useState(0);
+
+    // Load food count from localStorage
+    useEffect(() => {
+        const foodCount = JSON.parse(localStorage.getItem("food")) || 0;
+        setFood(foodCount);
+    }, []);
 
     // If we arrive on this page and the dialogue node was set to Base1,
     // make sure the dialogue UI is activated so the Base1 text appears.
@@ -23,6 +30,10 @@ export default function Base() {
     const Feed = () => {
 
         // TODO: Feeing logic and effect
+        if (food > 0) {
+            setFood(food - 1);
+            localStorage.setItem("food", JSON.stringify(food - 1));
+        }
 
         setIsVisible(true); // Show the div
         setTimeout(() => {
@@ -33,10 +44,14 @@ export default function Base() {
 
     return (
         <ScreenLayout>
-            <h1 style={{color: "black"}}>Base</h1>
+            
 
             {!isDialogueActive && (
                 <>
+                    <div className="food-display">
+                        Food: {food}
+                    </div>
+
                     <div className="action-container">
                         <a className="Feed_Button" onClick={Feed}>Feed</a>
                     </div>
