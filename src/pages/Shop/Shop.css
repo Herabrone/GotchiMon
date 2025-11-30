@@ -1,3 +1,14 @@
+.shop-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-title {
+    text-align: center;
+    font-size: 3em;
+}
+
 .shop-coins-container {
     display: flex;
     align-items: baseline;
@@ -16,14 +27,32 @@
 
 .shop-grid-item img {
     width: 100px;
+    margin-bottom: 20px;
+}
+
+.shop-grid-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 .shop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    margin: 0 auto;
+    border-radius: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.shop-cart-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 45%;
+    margin-top: 20px;
+    padding-left: 20px;
 }
 
 .shop-cart {
@@ -55,8 +84,13 @@
 }
 
 .shop-checkout {
-    text-align: center;
     font-size: 2em;
+}
+
+.shop-bottom-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
 .coin-sprite {

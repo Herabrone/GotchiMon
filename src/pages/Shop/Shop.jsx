@@ -3,10 +3,18 @@ import "./Shop.css";
 import { useState } from "react";
 import food from "./Food.png";
 import ScreenLayout from "../../components/screenlayout";
+import { useNavigate } from "react-router-dom";
+import TextWriter from "../../utils/TextWriter";
 
 export default function Shop() {
 
-    const [coins, setCoins] = useState(2);
+    const navigate = useNavigate();
+
+    const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
+    const CHECKOUT_TEXT = ""
+    const [dialogueText, setDialogueText] = useState(HELP_TEXT);
+
+    const [coins, setCoins] = useState(1);
     
     const [cart, setCart] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
@@ -66,45 +74,65 @@ export default function Shop() {
         setBoughtItems(...boughtItems, cart);
         setCart([]);
         setCartTotal(0);
-        console.log("total price", totalPrice);
     }
 
     return (
         <>
             <ScreenLayout>
-                <h1>Shop</h1> 
-
-                <div className="shop-coins-container">
-                    <p>Coins: {coins}</p>
-                    <div className="coin-sprite"></div>
-                </div>
-
-                <div className="shop-grid">
-                    {items.map((item) => (
-                        <div className={item.stock <= 0 ? "shop-grid-item sold-out" : "shop-grid-item"} onClick={() => addToCart(item.id)}>
-                            <img src={food}/>
-                            <span>{item.name}</span>
-                            <span>Stock: {item.stock}</span>
-                            <span>Price: {item.price}</span>
+                <div className="shop-container">
+                    <h2 className="shop-title">Shop</h2> 
+                    
+                    
+                    <div  style={{display: "flex", justifyContent: "space-between"}}>
+                        <div>
+                            <p>Tip: Fight monsters to get more coins!</p>
                         </div>
-                    ))}
-                </div>
-                
-                <div className="shop-cart">
-                    <h3>Cart:</h3>
-                    {cart.map((item, index) => (
-                        <div className="shop-cart-item">
-                            <img src={item.image} onClick={() => removeFromCart(index)}/>
+                        <div className="shop-coins-container">
+                            <p>Coins: {coins}</p>
+                            <div className="coin-sprite"></div>
                         </div>
-                    ))}
+                    </div>
+                    <div className="shop-grid-container">
+                        <div className="shop-grid">
+                            {items.map((item) => (
+                                <div className={item.stock <= 0 ? "shop-grid-item sold-out" : "shop-grid-item"} onClick={() => addToCart(item.id)}>
+                                    <img src={food}/>
+                                    <span>{item.name}</span>
+                                    <span>Stock: {item.stock}</span>
+                                    <span>Price: {item.price}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    
+                    <div className="shop-bottom-container">
+                        <div className="shop-cart-container">
+                            <div className="shop-cart">
+                                <h3>Cart:</h3>
+                                {cart.map((item, index) => (
+                                    <div className="shop-cart-item">
+                                        <img src={item.image} onClick={() => removeFromCart(index)}/>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="shop-coins-container">
+                                <p>Total: {cartTotal}</p>
+                                <div className="coin-sprite"></div>
+                            </div>
+                        </div>
+
+                        <a className="shop-checkout" onClick={() => checkout()}>Checkout</a>
+                    </div>
+                    
+                    
                 </div>
 
-                <div className="shop-coins-container">
-                    <p>Total: {cartTotal}</p>
-                    <div className="coin-sprite"></div>
+                <div className="dialogue">
+                    <div className="dialogue-text">
+                        <TextWriter text={dialogueText} delay={20}/>
+                    </div>
                 </div>
-                
-                <a className="shop-checkout" onClick={() => checkout()} disabled={true}>Checkout</a>
             </ScreenLayout>
         </>
     )
