@@ -1,26 +1,21 @@
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
-
 import { useNavigate } from "react-router-dom";
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
 
 // --- EGG 1 ---
 import egg1 from "../../../public/assets/sprites/egg/egg-1/egg-1.png";
-import egg1Rise from "../../../public/assets/sprites/egg/egg-1/egg-bounce-rise.png";
 import egg1Descent from "../../../public/assets/sprites/egg/egg-1/egg-bounce-descent.png";
 
 // --- EGG 2 ---
 import egg2 from "../../../public/assets/sprites/egg/egg-2/egg-2.png";
-import egg2Rise from "../../../public/assets/sprites/egg/egg-2/egg-2-bounce-rise.png";
 import egg2Descent from "../../../public/assets/sprites/egg/egg-2/egg-2-bounce-descent.png";
 
 // --- EGG 3 ---
 import egg3 from "../../../public/assets/sprites/egg/egg-3/egg-3.png";
-import egg3Rise from "../../../public/assets/sprites/egg/egg-3/egg-3-bounce-rise.png";
 import egg3Descent from "../../../public/assets/sprites/egg/egg-3/egg-3-bounce-descent.png";
-import { eggs } from "../../data/MonData";
 
 // --- SOUND EFFECTS ---
 import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
@@ -40,9 +35,9 @@ export default function SelectEgg() {
     const navigate = useNavigate();
 
     const eggs = [
-        { name: "Egg 1", still: egg1, rise: egg1Rise, descent: egg1Descent },
-        { name: "Egg 2", still: egg2, rise: egg2Rise, descent: egg2Descent },
-        { name: "Egg 3", still: egg3, rise: egg3Rise, descent: egg3Descent }
+        { name: "Egg 1", still: egg1, descent: egg1Descent },
+        { name: "Egg 2", still: egg2, descent: egg2Descent },
+        { name: "Egg 3", still: egg3, descent: egg3Descent }
     ];
 
     const [selectedEggIndex, setSelectedEggIndex] = useState(0);
@@ -65,17 +60,10 @@ export default function SelectEgg() {
 
     const selectEgg = (eggNumber) => {
         setSelectedEggIndex(eggNumber);
-        if (eggNumber === 0) { // egg 1
-            advanceDialogue("EggSelected1_0");
-        }
 
-        if (eggNumber === 1) { // egg 2
-            advanceDialogue("EggSelected2_0");
-        }
-
-        if (eggNumber === 2) { // egg 3
-            advanceDialogue("EggSelected3_0");
-        }
+        if (eggNumber === 0) advanceDialogue("EggSelected1_0");
+        if (eggNumber === 1) advanceDialogue("EggSelected2_0");
+        if (eggNumber === 2) advanceDialogue("EggSelected3_0");
 
         updateLocalStorage("myEgg", eggs[eggNumber]);
         setIsDialogueActive(true);
@@ -84,9 +72,7 @@ export default function SelectEgg() {
     // --- SPACE Press for cracking ---
     const handleKey = useCallback(
         (e) => {
-            if (!isHatching) return;
-            if (e.code !== "Space") return;
-            if (phaseIndex >= eggPhases.length - 1) return;
+            if (!isHatching || e.code !== "Space" || phaseIndex >= eggPhases.length - 1) return;
 
             setShake(true);
             setTimeout(() => setShake(false), 100);
@@ -103,9 +89,7 @@ export default function SelectEgg() {
                         setShake(true);
                         setTimeout(() => setShake(false), 300);
 
-                        if (next === eggPhases.length - 1) {
-                            new Audio(hatchSound).play();
-                        }
+                        if (next === eggPhases.length - 1) new Audio(hatchSound).play();
 
                         if (next >= eggPhases.length) {
                             setIsHatching(false);
@@ -146,10 +130,10 @@ export default function SelectEgg() {
             setBounceState((prev) =>
                 prev.map((state, i) => {
                     if (!isHovering[i]) return "still";
-                    return state === "rise" ? "descent" : "rise";
+                    return state === "still" ? "descent" : "still";
                 })
             );
-        }, 300); // match GIF length
+        }, 300);
 
         return () => clearInterval(interval);
     }, [isHovering]);
@@ -159,7 +143,6 @@ export default function SelectEgg() {
         const state = bounceState[i];
 
         if (!isHovering[i]) return egg.still;
-        if (state === "rise") return egg.rise;
         if (state === "descent") return egg.descent;
 
         return egg.still;
@@ -168,7 +151,6 @@ export default function SelectEgg() {
     return (
         <ScreenLayout>
             <div className={`page-container ${shake ? "shake" : ""}`}>
-
                 {isHatching && (
                     <div className="egg-hatching-container">
                         <img
@@ -209,7 +191,11 @@ export default function SelectEgg() {
                                     }
                                     onClick={() => selectEgg(index)}
                                 >
-                                    <div className="egg-fixed-box">
+                                    <div
+                                        className={`egg-fixed-box ${
+                                            bounceState[index] === "descent" ? "egg-descent" : ""
+                                        }`}
+                                    >
                                         <img
                                             src={getEggSprite(index)}
                                             alt={egg.name}
