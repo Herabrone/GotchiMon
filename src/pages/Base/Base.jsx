@@ -12,22 +12,26 @@ import monsterState1 from "../../../public/assets/sprites/first_evo/Blue_Slime.p
 export default function Base() {
 
     const navigate = useNavigate();
-    const { currentNode, isDialogueActive, setIsDialogueActive } = useDialogue();
+    const { currentNode, isDialogueActive, setIsDialogueActive, advanceDialogue } = useDialogue();
     const [isVisible, setIsVisible] = useState(false);
     const [food, setFood] = useState(0);
     const [coins, setCoins] = useState(0);
     const [monsterState, setMonsterState] = useState(1);
+    const [hasFirstFed, setHasFirstFed] = useState(false);
 
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
-        const foodCount = JSON.parse(localStorage.getItem("food")) || 0;
-        setFood(foodCount);
+        const foodCount = localStorage.getItem("food");
+        setFood(foodCount ? parseInt(JSON.parse(foodCount)) : 0);
         
-        const coinCount = JSON.parse(localStorage.getItem("coins")) || 1;
-        setCoins(coinCount);
+        const coinCount = localStorage.getItem("coins");
+        setCoins(coinCount ? parseInt(JSON.parse(coinCount)) : 1);
         
-        const savedMonsterState = JSON.parse(localStorage.getItem("monster_state")) || 1;
-        setMonsterState(savedMonsterState);
+        const savedMonsterState = localStorage.getItem("monster_state");
+        setMonsterState(savedMonsterState ? parseInt(JSON.parse(savedMonsterState)) : 1);
+        
+        const firstFedStatus = localStorage.getItem("hasFirstFed");
+        setHasFirstFed(firstFedStatus ? JSON.parse(firstFedStatus) : false);
     }, []);
 
     // If we arrive on this page and the dialogue node was set to Base1,
@@ -42,11 +46,23 @@ export default function Base() {
 
         if (food > 0) {
             setFood(food - 1);
-            localStorage.setItem("food", JSON.stringify(food - 1));
+            localStorage.setItem("food", (food - 1).toString());
             setIsVisible(true); // Show the div
             setTimeout(() => {
             setIsVisible(false); // Hide the div after 1000ms (1 second)
             }, 1000);
+
+            // Check if this is the first feeding
+            if (!hasFirstFed) {
+                setHasFirstFed(true);
+                localStorage.setItem("hasFirstFed", "true");
+                
+                // Trigger FirstFeeding dialogue after a short delay
+                setTimeout(() => {
+                    advanceDialogue('FirstFeeding_01');
+                    setIsDialogueActive(true);
+                }, 1500);
+            }
 
             //TODO: Add feeding animation and sound effect here
         }
@@ -70,7 +86,7 @@ export default function Base() {
         <ScreenLayout>
             
 
-            {!isDialogueActive && (
+            {(!isDialogueActive || currentNode === 'FirstFeeding_01' || currentNode === 'FirstFeeding_02') && (
                 <>
                     <div className="resources-container">
                         <div className="food-display">
