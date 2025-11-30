@@ -55,4 +55,5 @@
     width: 200px;
     height: auto;
     transition: transform 0.2s ease;
+    image-rendering: pixelated;
 }
