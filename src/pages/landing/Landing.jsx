@@ -26,7 +26,7 @@ export default function Landing() {
     const handleDialogueAction = (action) => {
         if (action === "SelectEgg") {
             advanceDialogue();
-            navigate("/select-egg"); //HERE
+            navigate("/select-egg"); 
         }
     };
 
@@ -38,6 +38,9 @@ export default function Landing() {
 
         //initializing food
         localStorage.setItem("food", JSON.stringify(1));
+        
+        //initializing monster state
+        localStorage.setItem("monster_state", JSON.stringify(1));
     }
 
     return (

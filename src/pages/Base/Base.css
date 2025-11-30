@@ -17,3 +17,29 @@
     font-weight: 700;
     margin-top: 6px;
 }
+
+.monster-display {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.monster-sprite {
+    min-width: 200px;
+    max-width: 400px;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.food-display {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
