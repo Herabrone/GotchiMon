@@ -1,6 +1,6 @@
 const dialogueTree = {
     start:{
-        text: "Hello! Were so excited for you to join us at get your first gotchimon!",
+        text: "Hello! We're so excited for you to join us to get your first gotchimon!",
         options: [
             {text: "Continue", next: "Nursery01"},
         ],
@@ -14,13 +14,13 @@ const dialogueTree = {
 
     // EGG 1
     EggSelected1_0:{
-        text:"You have selected Egg 1! EGGcelent choice!",
+        text:"You have selected Egg 1! EGGcellent choice!",
         options: [
             {text: "...", next: "EggSelected1_1"}
         ],
     },
     EggSelected1_1:{
-        text:"Tough crowd. Oh and the other eggs? Don't worry about them. They'll be my breakfast! Haha Im just kidding of course. Bye now!",
+        text:"Tough crowd. Oh and the other eggs? Don't worry about them. They'll be my breakfast! Haha I'm just kidding of course. Bye now!",
         options: [
             {text:"Continue", next: "EggSelected1_2" }
         ],
@@ -34,7 +34,7 @@ const dialogueTree = {
     
     //Dialogue converges for egg choices here to give more instructions
     Base1:{
-        text:"Congratulations! On hatching your first gotchimon. Always remember to feed and take care of it! And it will take care of you! By making you tons of money!",
+        text:"Congratulations on hatching your first gotchimon! Always remember to feed and take care of it and it will take care of you! It will make you tons of money!",
         options: [
             {text: "Continue", next: "Base2"}
         ],
@@ -71,18 +71,6 @@ const dialogueTree = {
             {text: "Continue", action: "HatchEgg", next: null}
         ],
     },
-    Evolution1:{
-        text:"Your gotchimon is evolving!",
-        options: [
-            {text:"Continue", next: "Evolution1_1" }
-        ],
-    },
-    Evolution1_1:{
-        text:"Your gotchimon evolved!",
-        options: [
-            {text:"Continue", next: null }
-        ],
-    },
 
     // EGG 3
     EggSelected3_0:{
@@ -107,7 +95,7 @@ const dialogueTree = {
 
     //First Feeding dialogue 
     FirstFeeding_01: {
-        text: "YOU: Still hungry huh? Okay lets get some more food ",
+        text: "YOU: Still hungry huh? Okay let's get some more food",
         options: [
             {text: "Continue", next: "FirstFeeding_02"}
         ],
@@ -147,7 +135,7 @@ const dialogueTree = {
 
      // After first Evolution
     AfterFirstEvolution_01: {
-        text: "YOU: Perfect you've grown so fast! ",
+        text: "YOU: Perfect, you've grown so fast!",
         options: [
             {text: "Continue", next: "AfterFirstEvolution_02"}
         ],
@@ -171,7 +159,7 @@ const dialogueTree = {
         ],
     },
     AfterFirstEvolution_05: {
-        text: "YOU: In the meantime lets make good on my initial investment! Lets go and fight!",
+        text: "YOU: In the meantime let's make good on my initial investment! Let's go and fight!",
         options: [
             {text: "Continue", action: "FirstFight", next: null}
         ],
@@ -196,7 +184,7 @@ const dialogueTree = {
         options: [] // No options - animation will play, then auto-advance to Evolution2_1
     },
     Evolution2_1:{
-        text:"Your gotchimon has reached its final form!",
+        text:"Your gotchimon has reached it's final form!",
         options: [
             {text:"Amazing!", action: "returnToBase", next: null }
         ],
@@ -252,46 +240,14 @@ const dialogueTree = {
         ],
     },
 
-    // After first Evolution
-    AfterFirstEvolution_01: {
-        text: "YOU: Perfect you’ve grown so fast! ",
-        options: [
-            {text: "Continue", next: "AfterFirstEvolution_02"}
-        ],
-    },
-    AfterFirstEvolution_02: {
-        text: "YOU: Hungry again? I just fed you!",
-        options: [
-            {text: "Continue", next: "AfterFirstEvolution_03"}
-        ],
-    },
-    AfterFirstEvolution_03: {
-        text: "YOU: Okay fine… this is getting expensive though",
-        options: [
-            {text: "Continue", action: "goToEmptyShop", next: "AfterFirstEvolution_04"}
-        ],
-    },
-    AfterFirstEvolution_04: {
-        text: "YOU: Well that's too bad, looks like we don't have enough coins for anything!",
-        options: [
-            {text: "Continue", action: "ReturnToBase", next: "AfterFirstEvolution_05"}
-        ],
-    },
-    AfterFirstEvolution_05: {
-        text: "YOU: In the meantime lets make good on my initial investment! Lets go and fight!",
-        options: [
-            {text: "Continue", action: "FirstFight", next: null}
-        ],
-    },
-
     AfterFirstFight_01: {
-        text: "YOU: Only 1 coin? Were going to need to grind all night!",
+        text: "YOU: Only 1 coin? We're going to need to grind all night!",
         options: [
             {text: "Continue", next: "AfterFirstFight_02"}
         ],
     },
     AfterFirstFight_02: {
-        text: "YOU: Lets see if the shops has more food",
+        text: "YOU: Let's see if the shop has more food",
         options: [
             {text: "Continue",  action: "goToShopWithBadFood", next: null}
         ],
@@ -304,7 +260,7 @@ const dialogueTree = {
     },
     //Evolution 2 occurs
     afterSecondEvolution_GOOD_0:{
-        text:"YOU: Wow you evolve fast!",
+        text:"YOU: Wow, you evolve fast!",
         options: [
             {text: "Continue", next: "afterSecondEvolution_GOOD_1"}
         ],
