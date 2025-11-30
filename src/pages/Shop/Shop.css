@@ -96,7 +96,7 @@
 .coin-sprite {
   width: 16px;
   height: 16px;
-  background-image: url('./MonedaD.png');
+  background-image: url('../../../public/assets/sprites/coin/MonedaD.png');
   animation: walk 0.6s steps(4) infinite;
 }
 

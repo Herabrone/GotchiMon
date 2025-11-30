@@ -5,14 +5,12 @@ import Dialogue from "../../components/Dialogue";
 import { useNavigate } from "react-router-dom";
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
-
-import egg1 from "../../../public/assets/sprites/egg/egg-1/egg-1.png";
-import egg2 from "../../../public/assets/sprites/egg/egg-2/egg-2.png";
-import egg3 from "../../../public/assets/sprites/egg/egg-3/egg-3.png";
+import { eggs } from "../../data/MonData";
 
 // --- SOUND EFFECTS ---
 import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
 import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
+import { updateLocalStorage } from "../../utils/localStorage";
 
 // --- STATIC egg phases ---
 const eggPhases = [
@@ -26,11 +24,7 @@ const hatchSounds = [crack1, hatchSound];
 export default function SelectEgg() {
     const navigate = useNavigate();
 
-    const eggs = [
-        {name: "Egg 1", image: egg1},
-        {name: "Egg 2", image: egg2},
-        {name: "Egg 3", image: egg3}
-    ]
+    
     const [selectedEggIndex, setSelectedEggIndex] = useState(0);
 
     const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
@@ -54,7 +48,7 @@ export default function SelectEgg() {
             advanceDialogue("EggSelected3_0");
         }
 
-        
+        updateLocalStorage("myEgg", eggs[eggNumber]);
         setIsDialogueActive(true);
     };
 

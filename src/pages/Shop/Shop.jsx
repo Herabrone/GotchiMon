@@ -1,30 +1,25 @@
 import "./Shop.css";
 
 import { useState } from "react";
-import food from "./Food.png";
 import ScreenLayout from "../../components/screenlayout";
 import { useNavigate } from "react-router-dom";
 import TextWriter from "../../utils/TextWriter";
+import { updateLocalStorage } from "../../utils/localStorage";
 
 export default function Shop() {
 
     const navigate = useNavigate();
 
     const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
-    const CHECKOUT_TEXT = ""
+    const CHECKOUT_TEXT = "Thank you!";
     const [dialogueText, setDialogueText] = useState(HELP_TEXT);
 
-    const [coins, setCoins] = useState(1);
+    const [coins, setCoins] = useState(localStorage.getItem("coins"));
     
     const [cart, setCart] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
 
-    const [items, setItems] = useState([
-        {id: 1, name: "Food", image: food, stock: 1, price: 1},
-        {id: 2, name: "Food", image: food, stock: 0, price: 1},
-    ])
-
-    const [boughtItems, setBoughtItems] = useState([])
+    const [items, setItems] = useState(JSON.parse(localStorage.getItem("shopItems")));
 
     function addToCart(id) {
         setItems(prev =>
@@ -62,18 +57,23 @@ export default function Shop() {
 
     function checkout() {
         // calculate total price
-        let totalPrice = 0;
-        cart.forEach((item) => totalPrice += item.price);
+        if (cart.length >= 1) { 
+            let totalPrice = 0;
+            cart.forEach((item) => totalPrice += item.price);
 
-        if (coins >= totalPrice) {
-            setCoins(coins-totalPrice);
-        } else {
-            return;
+            if (coins >= totalPrice) {
+                setCoins(coins-totalPrice);
+                updateLocalStorage("coins", coins-totalPrice);
+            } else {
+                return;
+            }
+
+            setDialogueText(CHECKOUT_TEXT);
+            setCart([]);
+            setCartTotal(0);
+            // update local storage of the shop
+            updateLocalStorage("shopItems", items);
         }
-
-        setBoughtItems(...boughtItems, cart);
-        setCart([]);
-        setCartTotal(0);
     }
 
     return (
@@ -94,14 +94,14 @@ export default function Shop() {
                     </div>
                     <div className="shop-grid-container">
                         <div className="shop-grid">
-                            {items.map((item) => (
+                            {items ? items.map((item) => (
                                 <div className={item.stock <= 0 ? "shop-grid-item sold-out" : "shop-grid-item"} onClick={() => addToCart(item.id)}>
-                                    <img src={food}/>
+                                    <img src={item.image}/>
                                     <span>{item.name}</span>
                                     <span>Stock: {item.stock}</span>
                                     <span>Price: {item.price}</span>
                                 </div>
-                            ))}
+                            )) : "Shop is currently closed"}
                         </div>
                     </div>
                     
