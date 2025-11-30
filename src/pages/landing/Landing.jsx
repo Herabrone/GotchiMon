@@ -8,7 +8,7 @@ import { shopItems } from '../../data/ShopData';
 import { coins } from '../../data/UserData';
 
 export default function Landing() {
-    const { setIsDialogueActive, resetDialogue, isDialogueActive } = useDialogue();
+    const { setIsDialogueActive, resetDialogue, isDialogueActive, advanceDialogue } = useDialogue();
     const navigate = useNavigate();
 
     // Start dialogue when user clicks Start by resetting the dialogue
@@ -24,7 +24,8 @@ export default function Landing() {
 
     const handleDialogueAction = (action) => {
         if (action === "SelectEgg") {
-           navigate("/select-egg");
+            advanceDialogue();
+            navigate("/select-egg");
         }
     };
 
