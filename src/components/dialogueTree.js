@@ -142,6 +142,12 @@ const dialogueTree = {
             {text: "Ok", action: "Ok", next: null}
         ],
     },
+    ShopNotEnoughCoins: {
+        text: "Please make sure you have enough coins!",
+        options: [
+            {text: "Ok", action: "Ok", next: null}
+        ],
+    },
     ShopComplete: {
         text: "Thank you for shopping! Enjoy :)",
         options: [

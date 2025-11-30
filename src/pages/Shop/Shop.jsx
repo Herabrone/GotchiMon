@@ -13,11 +13,6 @@ export default function Shop() {
     const navigate = useNavigate();
     const { advanceDialogue } = useDialogue();
 
-    const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
-    const CHECKOUT_TEXT = "Thank you!";
-    const NOT_ENOUGH_COINS_TEXT = "Make sure you have enough coins!";
-    const [dialogueText, setDialogueText] = useState(HELP_TEXT);
-
     const [coins, setCoins] = useState(localStorage.getItem("coins"));
     
     const [cart, setCart] = useState([]);
@@ -67,16 +62,17 @@ export default function Shop() {
 
             if (coins >= totalPrice) {
                 setCoins(coins-totalPrice);
+                // update local storage on purchase
                 updateLocalStorage("coins", coins-totalPrice);
             } else {
-                setDialogueText(NOT_ENOUGH_COINS_TEXT);
+                advanceDialogue("ShopNotEnoughCoins");
                 return;
             }
 
             setCart([]);
             setCartTotal(0);
             advanceDialogue("ShopComplete");
-            // update local storage of the shop
+            // update local storage on checkout
             updateLocalStorage("shopItems", items);
         }
     }

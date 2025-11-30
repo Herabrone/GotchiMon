@@ -5,10 +5,11 @@ import Dialogue from '../../components/Dialogue';
 import { useDialogue } from "../../utils/dialogueContext";
 import { updateLocalStorage } from '../../utils/localStorage';
 import './Fight.css';
+import { shopItems2 } from '../../data/ShopData';
 
 export default function Fight() {
     const navigate = useNavigate();
-    const { advanceDialogue, setIsDialogueActive, currentNode } = useDialogue();
+    const { advanceDialogue, setIsDialogueActive } = useDialogue();
 
     const [isAttacking, setIsAttacking] = useState(false);
     const [enemyHurt, setEnemyHurt] = useState(false);
@@ -67,7 +68,12 @@ export default function Fight() {
             navigate('/base');
         } else if (action == "RewardCoin") {
             const currCoins = Number(localStorage.getItem("coins"));
+
+            // update coins
             updateLocalStorage("coins", currCoins+1);
+
+            // update shopItems
+            updateLocalStorage("shopItems", shopItems2);
         }
     };
 
