@@ -19,6 +19,7 @@ export default function Base() {
     const [monsterState, setMonsterState] = useState(1);
     const [hasFirstFed, setHasFirstFed] = useState(false);
     const [showShopButton, setShowShopButton] = useState(false);
+    const [hasSecondFed, setHasSecondFed] = useState(false);
 
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
@@ -36,6 +37,9 @@ export default function Base() {
         
         const shopButtonStatus = localStorage.getItem("showShopButton");
         setShowShopButton(shopButtonStatus ? JSON.parse(shopButtonStatus) : false);
+        
+        const secondFedStatus = localStorage.getItem("hasSecondFed");
+        setHasSecondFed(secondFedStatus ? JSON.parse(secondFedStatus) : false);
     }, []);
 
     // If we arrive on this page and the dialogue node was set to Base1,
@@ -67,6 +71,17 @@ export default function Base() {
                     setIsDialogueActive(true);
                 }, 1500);
             }
+            // Check if this is the second feeding (after shop visit)
+            else if (hasFirstFed && !hasSecondFed) {
+                setHasSecondFed(true);
+                localStorage.setItem("hasSecondFed", "true");
+                
+                // Trigger SecondFeeding dialogue after a short delay
+                setTimeout(() => {
+                    advanceDialogue('SecondFeeding_01');
+                    setIsDialogueActive(true);
+                }, 1500);
+            }
 
             //TODO: Add feeding animation and sound effect here
         }
@@ -90,6 +105,16 @@ export default function Base() {
             // can add more cases for different monster states in the futuer
             default:
                 return monsterState1;
+        }
+    };
+
+    const handleDialogueAction = (action) => {
+        if (action === 'firstEvolution') {
+            advanceDialogue('Evolution1');
+            setIsDialogueActive(true);
+            setTimeout(() => {
+                navigate('/evolution');
+            }, 100);
         }
     };
 
@@ -129,8 +154,8 @@ export default function Base() {
             )}
 
             {/* Render Dialogue so dialogue can appear on this page */}
-            <Dialogue />
+            <Dialogue onAction={handleDialogueAction} />
             
         </ScreenLayout>
     )
-}
+};
