@@ -197,6 +197,10 @@ export default function Base() {
             setIsDialogueActive(false);
         } else if (action === 'FirstFight') {
             navigate('/fight');
+        } else if (action === 'goToEmptyShop') {
+            // Mark that we're visiting empty shop
+            localStorage.setItem('visitingEmptyShop', 'true');
+            navigate('/shop');
         }
     };
 

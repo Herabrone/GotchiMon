@@ -109,7 +109,18 @@ export default function Shop() {
 
     useEffect(() => {
         playShopAudioLoop();
-        advanceDialogue("ShopStart");
+        
+        // Check if visiting empty shop (after first evolution)
+        const visitingEmptyShop = localStorage.getItem('visitingEmptyShop');
+        if (visitingEmptyShop === 'true') {
+            localStorage.removeItem('visitingEmptyShop');
+            // Trigger the empty shop dialogue
+            setTimeout(() => {
+                advanceDialogue('AfterFirstEvolution_04');
+            }, 500);
+        } else {
+            advanceDialogue("ShopStart");
+        }
     }, []);
 
     return (
