@@ -7,11 +7,13 @@ import TextWriter from "../../utils/TextWriter";
 import { updateLocalStorage } from "../../utils/localStorage";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
+import checkoutAudio from "../../../public/assets/sfx/shop/checkout.mp3";
 
 export default function Shop() {
 
     const navigate = useNavigate();
     const { advanceDialogue } = useDialogue();
+    const checkoutSound = new Audio(checkoutAudio);
 
     const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
     const CHECKOUT_TEXT = "Thank you!";
@@ -78,6 +80,7 @@ export default function Shop() {
             advanceDialogue("ShopComplete");
             // update local storage of the shop
             updateLocalStorage("shopItems", items);
+            checkoutSound.play();
         }
     }
 
