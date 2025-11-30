@@ -104,6 +104,8 @@ export default function Base() {
                     setIsDialogueActive(true);
                 }, 500);
             }
+        } else if (monsterState === 3) {
+            navigate('/final');
         }
         
         // Handle returning from second evolution (final form)
@@ -193,7 +195,7 @@ export default function Base() {
                 
                 // Set monster alignment based on last purchased food
                 const lastFoodType = localStorage.getItem('last_food_type') || 'good';
-                localStorage.setItem('monster_alignment', lastFoodType);
+                localStorage.setItem('monsterAlignment', lastFoodType);
                 
                 setTimeout(() => {
                     advanceDialogue('ThirdFeeding_01');
