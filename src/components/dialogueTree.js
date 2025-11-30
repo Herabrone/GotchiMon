@@ -95,7 +95,7 @@ const dialogueTree = {
 
     //First Feeding dialogue 
     FirstFeeding_01: {
-        text: "YOU: Still hungry huh? Okay let's get some more food",
+        text: "YOU: Still hungry huh? Okay let's get some more food.",
         options: [
             {text: "Continue", next: "FirstFeeding_02"}
         ],
@@ -147,13 +147,13 @@ const dialogueTree = {
         ],
     },
     AfterFirstEvolution_03: {
-        text: "YOU: Okay fine, this is getting expensive though",
+        text: "YOU: Okay fine, this is getting expensive though.",
         options: [
             {text: "Continue", action: "goToEmptyShop", next: "AfterFirstEvolution_04"}
         ],
     },
     AfterFirstEvolution_04: {
-        text: "YOU: Well that's too bad, looks like they need more time to get more food",
+        text: "YOU: Well that's too bad, looks like they need more time to get more food.",
         options: [
             {text: "Continue", action: "ReturnToBase", next: "AfterFirstEvolution_05"}
         ],
@@ -247,7 +247,7 @@ const dialogueTree = {
         ],
     },
     AfterFirstFight_02: {
-        text: "YOU: Let's see if the shop has more food",
+        text: "YOU: Let's see if the shop has more food.",
         options: [
             {text: "Continue",  action: "goToShopWithBadFood", next: null}
         ],
@@ -274,7 +274,7 @@ const dialogueTree = {
     //gotchimon leaves hapily
 
     afterSecondEvolution_BAD_0:{
-        text:"YOU: Hey… are you okay? You seem… Different",
+        text:"YOU: Hey… are you okay? You seem… Different.",
         options: [
             {text: "Continue", next: "afterSecondEvolution_BAD_1"}
         ],
