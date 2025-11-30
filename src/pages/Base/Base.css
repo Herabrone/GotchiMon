@@ -13,6 +13,24 @@
     white-space: nowrap;
 }
 
+.mute-button {
+position: absolute;
+top: 20px;
+right: 20px;
+z-index: 20;
+background: none;
+border: none;
+color: #000;
+cursor: pointer;
+padding: 10px;
+border-radius: 50%;
+transition: background-color 0.2s;
+}
+
+.mute-button:hover {
+background-color: rgba(0, 0, 0, 0.1);
+}
+
 .yum-message {
     position: absolute;
     top: 50%;
