@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react'; 
 import './Base.css';
 import ScreenLayout from '../../components/screenlayout';
 import Dialogue from '../../components/Dialogue';
@@ -8,6 +8,7 @@ import { useDialogue } from "../../utils/dialogueContext";
 
 // Import monster sprites
 import monsterState1 from "../../../public/assets/sprites/first_evo/Blue_Slime.png";
+const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3'; 
 
 export default function Base() {
 
@@ -19,6 +20,35 @@ export default function Base() {
     const [monsterState, setMonsterState] = useState(1);
     const [hasFirstFed, setHasFirstFed] = useState(false);
     const [showShopButton, setShowShopButton] = useState(false);
+
+    const audioRef = useRef(null); 
+
+    useEffect(() => {
+        const audio = audioRef.current;
+
+        const playMusic = () => {
+            if (audio) {
+                audio.loop = true;
+                audio.volume = 0.5; 
+                audio.currentTime = 0; 
+
+                audio.play().catch(e => {
+                    console.warn("Base Page BGM failed to play automatically. User interaction needed:", e);
+                });
+            }
+        };
+
+        playMusic();
+
+        // Cleanup: Stop the music when navigating away from the Base page
+        return () => {
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        };
+    }, []); 
+
 
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
@@ -96,8 +126,8 @@ export default function Base() {
 
     return (
         <ScreenLayout>
+            <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" /> 
             
-
             {(!isDialogueActive || currentNode === 'FirstFeeding_01' || currentNode === 'FirstFeeding_02') && (
                 <>
                     <div className="resources-container">
