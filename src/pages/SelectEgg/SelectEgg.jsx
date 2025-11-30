@@ -22,14 +22,13 @@ import crack1 from "../../../public/assets/sfx/egg-hatch/egg_crack.mp3";
 import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
 
 
-// --- STATIC hatching sequence ---
-const eggPhases = [
-    "/assets/sprites/egg/egg.gif",
-    "/assets/sprites/egg/egg-crack-1.gif",
-    "/assets/sprites/egg/egg-crack-2.gif",
-    "/assets/sprites/egg/egg-crack-3.gif",
-    "/assets/sprites/first_evo/Blue_Slime.png"
-];
+// --- STATIC hatching sequence (We only use the final sprite here) ---
+const finalMonsterSprite = "/assets/sprites/first_evo/Blue_Slime.png"; 
+
+// We'll simulate the crack phases visually using the base image and shake effect,
+// only swapping to the monster at the end.
+// We keep an array length of 5 for phase indexing (0, 1, 2, 3, 4)
+const PHASE_COUNT = 5;
 
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3';
 
@@ -106,7 +105,7 @@ export default function SelectEgg() {
         if (!isHatching || e.code !== "Space") return;
         
         // Don't process if already at the end
-        if (phaseIndex >= eggPhases.length - 1) return;
+        if (phaseIndex >= PHASE_COUNT - 1) return; // Use PHASE_COUNT
 
         setShake(true);
         setTimeout(() => setShake(false), 100);
@@ -123,7 +122,7 @@ export default function SelectEgg() {
                     setShake(true);
                     setTimeout(() => setShake(false), 300);
 
-                    if (next === eggPhases.length - 1) {
+                    if (next === PHASE_COUNT - 1) { // Check against PHASE_COUNT
                         new Audio(hatchSound).play();
                         // Wait 2 seconds then navigate
                         setTimeout(() => {
@@ -134,7 +133,7 @@ export default function SelectEgg() {
                         }, 2000);
                     }
 
-                    if (next >= eggPhases.length) {
+                    if (next >= PHASE_COUNT) { // Check against PHASE_COUNT
                         return prevPhase;
                     }
 
@@ -198,6 +197,19 @@ export default function SelectEgg() {
         return egg.still;
     };
 
+    let currentHatchingSprite = "";
+    if (isHatching) {
+        if (phaseIndex < PHASE_COUNT - 1) {
+            // Use the still sprite of the selected egg for all cracking phases
+            // This ensures the correct egg identity is maintained visually.
+            currentHatchingSprite = eggs[selectedEggIndex].still;
+        } else if (phaseIndex === PHASE_COUNT - 1) {
+            // Use the final monster sprite
+            currentHatchingSprite = finalMonsterSprite;
+        }
+    }
+
+
     return (
         <ScreenLayout>
             <audio ref={audioRef} src={IDLE_MUSIC_SRC} preload="auto" /> 
@@ -206,12 +218,13 @@ export default function SelectEgg() {
                 {isHatching && (
                     <div className="egg-hatching-container">
                         <img
-                            src={eggPhases[phaseIndex]}
+                            // Source is now determined dynamically based on phaseIndex
+                            src={currentHatchingSprite} 
                             className="egg-hatching-sprite selected-egg-img"
                             alt="egg hatching"
                         />
                         <p className="hatch-instructions">
-                            {phaseIndex < eggPhases.length - 1
+                            {phaseIndex < PHASE_COUNT - 1 // Check against PHASE_COUNT
                                 ? `Keep pressing SPACE to hatch… (${pressCount}/${pressThreshold})`
                                 : "Your Gotchimon hatched!"}
                         </p>
