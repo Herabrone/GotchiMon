@@ -76,8 +76,11 @@ export default function SelectEgg() {
 
     // --- SPACE Press for cracking logic ---
     const handleKey = useCallback((e) => {
-        // Only run if hatching, space is pressed, and not already finished
-        if (!isHatching || e.code !== "Space" || phaseIndex >= eggPhases.length - 1) return;
+        // Only run if hatching and space is pressed
+        if (!isHatching || e.code !== "Space") return;
+        
+        // Don't process if already at the end
+        if (phaseIndex >= eggPhases.length - 1) return;
 
         setShake(true);
         setTimeout(() => setShake(false), 100);
@@ -94,12 +97,17 @@ export default function SelectEgg() {
                     setShake(true);
                     setTimeout(() => setShake(false), 300);
 
-                    if (next === eggPhases.length - 1) new Audio(hatchSound).play();
+                    if (next === eggPhases.length - 1) {
+                        new Audio(hatchSound).play();
+                        // Wait 2 seconds then navigate
+                        setTimeout(() => {
+                            setIsHatching(false);
+                            navigate('/base');
+                        }, 2000);
+                    }
 
                     if (next >= eggPhases.length) {
-                        // Sequence complete
-                        setIsHatching(false);
-                        setTimeout(() => navigate("/base"), 800);
+                        // Already handled above
                         return prevPhase;
                     }
 
@@ -130,11 +138,14 @@ export default function SelectEgg() {
 
     const handleDialogueAction = (action) => {
         if (action === "HatchEgg") {
-            setIsDialogueActive(false);
-            setIsHatching(true);
-            setPhaseIndex(0);
-            setPressCount(0);
-            setPressThreshold(getRandomThreshold(10, 20));
+            // Only start hatching if not already hatching
+            if (!isHatching) {
+                setIsDialogueActive(false);
+                setIsHatching(true);
+                setPhaseIndex(0);
+                setPressCount(0);
+                setPressThreshold(getRandomThreshold(10, 20));
+            }
         }
     };
 
