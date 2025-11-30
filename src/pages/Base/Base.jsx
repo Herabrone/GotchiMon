@@ -45,6 +45,7 @@ export default function Base() {
     const [hasThirdFed, setHasThirdFed] = useState(false);
     const [showFightButton, setShowFightButton] = useState(false);
     const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
+    const [hasReturnedFromSecondEvolution, setHasReturnedFromSecondEvolution] = useState(false);
     const [hasCompletedFirstFight, setHasCompletedFirstFight] = useState(false);
     const [isMuted, setIsMuted] = useState(
         () => {
