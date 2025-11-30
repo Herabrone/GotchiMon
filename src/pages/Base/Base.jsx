@@ -118,7 +118,7 @@ export default function Base() {
                 // Check alignment and show appropriate dialogue
                 const alignment = localStorage.getItem('monster_alignment') || 'good';
                 setTimeout(() => {
-                    if (alignment === 'good') {
+                    if (alignment.includes('good')) {
                         advanceDialogue('afterSecondEvolution_GOOD_0');
                     } else {
                         advanceDialogue('afterSecondEvolution_BAD_0');

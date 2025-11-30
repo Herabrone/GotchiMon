@@ -310,7 +310,7 @@ const dialogueTree = {
         ],
     },
     afterSecondEvolution_GOOD_1:{
-        text:"GOTCHIMON:> I'm ready to go off on my own...",
+        text:"GOTCHIMON: I'm ready to go off on my own...",
         options: [
             {text: "Continue", next: null}
         ],
@@ -324,7 +324,7 @@ const dialogueTree = {
         ],
     },
     afterSecondEvolution_BAD_1:{
-        text:"GOTCHIMON:> What… what have you been feeding me…",
+        text:"GOTCHIMON: What… what have you been feeding me…",
         options: [
             {text: "Continue", next: "afterSecondEvolution_BAD_2"}
         ],

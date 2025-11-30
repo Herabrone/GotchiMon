@@ -12,7 +12,7 @@ export default function Final() {
     const { advanceDialogue } = useDialogue();
 
     const alignment = localStorage.getItem("monsterAlignment");
-    const good = alignment === "good";
+    const good = alignment.includes("good");
 
     const handleDialogueAction = (action) => {
         if (action === "BackToStart") {
@@ -21,6 +21,7 @@ export default function Final() {
     };
 
     useEffect(() => {
+        console.log(good);
         if (good) {
             advanceDialogue("FinalStartG");
         } else {
