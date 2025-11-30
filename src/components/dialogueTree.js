@@ -147,7 +147,7 @@ const dialogueTree = {
         ],
     },
     AfterFirstEvolution_03: {
-        text: "YOU: Okay fine, this is getting expensive though.",
+        text: "YOU: Okay fine, this is getting expensive though. Let's go to the shop to see what we can get.",
         options: [
             {text: "Continue", action: "goToEmptyShop", next: "AfterFirstEvolution_04"}
         ],

@@ -5,6 +5,7 @@ import Dialogue from "../../components/Dialogue";
 import ScreenLayout from "../../components/screenlayout";
 import { useDialogue } from "../../utils/dialogueContext";
 import { useNavigate } from "react-router-dom";
+import twistAudio from "../../../public/assets/sfx/bg-music/twist/twist.mp3";
 
 export default function Final() {
 
@@ -13,6 +14,8 @@ export default function Final() {
 
     const alignment = localStorage.getItem("monsterAlignment");
     const good = alignment.includes("good");
+
+    const twist = new Audio(twistAudio);
 
     const handleDialogueAction = (action) => {
         if (action === "BackToStart") {
@@ -24,6 +27,7 @@ export default function Final() {
         if (good) {
             advanceDialogue("FinalStartG");
         } else {
+            twist.play();
             advanceDialogue("FinalStartB_0");
         }
     }, [good]);
