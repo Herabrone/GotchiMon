@@ -70,11 +70,16 @@ export default function Shop() {
         if (cart.length >= 1) { 
             let totalPrice = 0;
             let totalFoodPurchased = 0;
+            let lastFoodType = 'good'; // default
             
             cart.forEach((item) => {
                 totalPrice += item.price;
                 // Count food items purchased (assuming all shop items are food no good or bad)
                 totalFoodPurchased += 1;
+                // Track the type of the last food item in cart
+                if (item.type) {
+                    lastFoodType = item.type;
+                }
             });
 
             const currentCoins = parseInt(coins);
@@ -87,6 +92,9 @@ export default function Shop() {
                 const currentFood = parseInt(localStorage.getItem("food") || "0");
                 const newFoodAmount = currentFood + totalFoodPurchased;
                 updateLocalStorage("food", newFoodAmount.toString());
+                
+                // Save the type of food purchased for evolution path
+                updateLocalStorage("last_food_type", lastFoodType);
             } else {
                 advanceDialogue("ShopNotEnoughCoins");
                 return;

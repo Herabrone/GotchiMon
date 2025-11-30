@@ -29,6 +29,7 @@ export default function Base() {
     const [showFightButton, setShowFightButton] = useState(false);
     const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
     const [hasCompletedFirstFight, setHasCompletedFirstFight] = useState(false);
+    const [hasReturnedFromSecondEvolution, setHasReturnedFromSecondEvolution] = useState(false);
 
     const audioRef = useRef(null); 
     const eatAudioRef = useRef(null);
@@ -104,7 +105,27 @@ export default function Base() {
                 }, 500);
             }
         }
-    }, [monsterState, hasReturnedFromEvolution, advanceDialogue, setIsDialogueActive]);
+        
+        // Handle returning from second evolution (final form)
+        if (monsterState === 3 && !hasReturnedFromSecondEvolution) {
+            const justEvolvedToFinal = localStorage.getItem('justEvolvedToFinal');
+            if (justEvolvedToFinal === 'true') {
+                localStorage.removeItem('justEvolvedToFinal');
+                setHasReturnedFromSecondEvolution(true);
+                
+                // Check alignment and show appropriate dialogue
+                const alignment = localStorage.getItem('monster_alignment') || 'good';
+                setTimeout(() => {
+                    if (alignment === 'good') {
+                        advanceDialogue('afterSecondEvolution_GOOD_0');
+                    } else {
+                        advanceDialogue('afterSecondEvolution_BAD_0');
+                    }
+                    setIsDialogueActive(true);
+                }, 500);
+            }
+        }
+    }, [monsterState, hasReturnedFromEvolution, hasReturnedFromSecondEvolution, advanceDialogue, setIsDialogueActive]);
 
     // Handle returning from first fight - show AfterFirstFight dialogue
     useEffect(() => {
@@ -208,6 +229,7 @@ export default function Base() {
             }, 100);
         } else if (action === 'secondEvolution') {
             // Set dialogue to Evolution2 before navigating
+            localStorage.setItem('justEvolvedToFinal', 'true');
             advanceDialogue('Evolution2');
             setTimeout(() => {
                 navigate('/evolution');
