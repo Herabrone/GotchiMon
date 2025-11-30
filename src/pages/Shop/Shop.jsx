@@ -74,11 +74,24 @@ export default function Shop() {
         // calculate total price
         if (cart.length >= 1) { 
             let totalPrice = 0;
-            cart.forEach((item) => totalPrice += item.price);
+            let totalFoodPurchased = 0;
+            
+            cart.forEach((item) => {
+                totalPrice += item.price;
+                // Count food items purchased (assuming all shop items are food no good or bad)
+                totalFoodPurchased += 1;
+            });
 
-            if (coins >= totalPrice) {
-                setCoins(coins-totalPrice);
-                updateLocalStorage("coins", coins-totalPrice);
+            const currentCoins = parseInt(coins);
+            if (currentCoins >= totalPrice) {
+                const newCoinsAmount = currentCoins - totalPrice;
+                setCoins(newCoinsAmount.toString());
+                updateLocalStorage("coins", newCoinsAmount.toString());
+                
+                // Update food count in localStorage
+                const currentFood = parseInt(localStorage.getItem("food") || "0");
+                const newFoodAmount = currentFood + totalFoodPurchased;
+                updateLocalStorage("food", newFoodAmount.toString());
             } else {
                 setDialogueText(NOT_ENOUGH_COINS_TEXT);
                 return;

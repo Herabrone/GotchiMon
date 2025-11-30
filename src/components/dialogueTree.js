@@ -93,6 +93,21 @@ const dialogueTree = {
     },
 
 
+    //First Feeding dialogue 
+    FirstFeeding_01: {
+        text: "YOU: Still hungry huh? Okay lets get some more food ",
+        options: [
+            {text: "Continue", next: "FirstFeeding_02"}
+        ],
+    },
+    FirstFeeding_02: {
+        text: "Enter the shop to buy more food!",
+        options: [
+            {text: "Continue", next: null}
+        ],
+    },
+
+
     // Fight dialogue nodes
     FightBegin: {
         text: "Begin fight!",
