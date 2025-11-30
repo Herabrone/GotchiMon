@@ -1,17 +1,21 @@
 import "./Shop.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScreenLayout from "../../components/screenlayout";
 import { useNavigate } from "react-router-dom";
 import TextWriter from "../../utils/TextWriter";
 import { updateLocalStorage } from "../../utils/localStorage";
+import { useDialogue } from "../../utils/dialogueContext";
+import Dialogue from "../../components/Dialogue";
 
 export default function Shop() {
 
     const navigate = useNavigate();
+    const { advanceDialogue } = useDialogue();
 
     const HELP_TEXT = "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.";
     const CHECKOUT_TEXT = "Thank you!";
+    const NOT_ENOUGH_COINS_TEXT = "Make sure you have enough coins!";
     const [dialogueText, setDialogueText] = useState(HELP_TEXT);
 
     const [coins, setCoins] = useState(localStorage.getItem("coins"));
@@ -65,23 +69,33 @@ export default function Shop() {
                 setCoins(coins-totalPrice);
                 updateLocalStorage("coins", coins-totalPrice);
             } else {
+                setDialogueText(NOT_ENOUGH_COINS_TEXT);
                 return;
             }
 
-            setDialogueText(CHECKOUT_TEXT);
             setCart([]);
             setCartTotal(0);
+            advanceDialogue("ShopComplete");
             // update local storage of the shop
             updateLocalStorage("shopItems", items);
         }
     }
+
+    const handleDialogueAction = (action) => {
+        if (action === "ReturnToBase") {
+            navigate('/base');
+        }
+    };
+
+    useEffect(() => {
+        advanceDialogue("ShopStart");
+    }, []);
 
     return (
         <>
             <ScreenLayout>
                 <div className="shop-container">
                     <h2 className="shop-title">Shop</h2> 
-                    
                     
                     <div  style={{display: "flex", justifyContent: "space-between"}}>
                         <div>
@@ -128,12 +142,7 @@ export default function Shop() {
                     
                 </div>
 
-                <div className="dialogue">
-                    <div className="dialogue-text">
-                        <TextWriter text={dialogueText} delay={20}/>
-                    </div>
-                </div>
-            </ScreenLayout>
+                <Dialogue onAction={handleDialogueAction} />            </ScreenLayout>
         </>
     )
 }

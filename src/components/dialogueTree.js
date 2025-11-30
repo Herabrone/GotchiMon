@@ -108,6 +108,20 @@ const dialogueTree = {
             {text: "Continue", action: "ReturnToBase", next: null}
         ],
     },
+
+    // Shop Dialogue nodes
+    ShopStart: {
+        text: "Select your food then checkout to purchase. If you change your mind, click on the selected item in your cart to remove it.",
+        options: [
+            {text: "Ok", action: "Ok", next: null}
+        ],
+    },
+    ShopComplete: {
+        text: "Thank you for shopping! Enjoy :)",
+        options: [
+            {text: "Back to Base", action: "ReturnToBase", next: null}
+        ],
+    },
     
 };
 
