@@ -1,0 +1,38 @@
+.sprite-container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.good-idle-sprite {
+    width: 64px;
+    height: 64px;
+    transform: scale(5);
+    image-rendering: pixelated;
+    background-image: url('../../../public/assets/sprites/third_evo/Good_Monster_Idle.png');
+    background-size: 256px 64px;
+    background-repeat: no-repeat;
+    animation: evo-walk 1s steps(4) infinite;
+}
+
+.bad-idle-sprite {
+    width: 40px;
+    height: 70px;
+    transform: scale(5);
+    image-rendering: pixelated;
+    background-image: url('../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png');
+    background-size: 256px 64px;
+    background-repeat: no-repeat;
+    animation: evo-walk 1s steps(6) infinite;
+}
+
+@keyframes evo-walk {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -256px 0;
+    }
+}

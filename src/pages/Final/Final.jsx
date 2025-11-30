@@ -1,3 +1,5 @@
+import './Final.css';
+
 import { useEffect } from "react";
 import Dialogue from "../../components/Dialogue";
 import ScreenLayout from "../../components/screenlayout";
@@ -9,8 +11,8 @@ export default function Final() {
     const navigate = useNavigate();
     const { advanceDialogue } = useDialogue();
 
-    //const ending = localStorage.getItem("ending");
-    const ending = 1;
+    const alignment = localStorage.getItem("monsterAlignment");
+    const good = alignment === "good";
 
     const handleDialogueAction = (action) => {
         if (action === "BackToStart") {
@@ -19,18 +21,19 @@ export default function Final() {
     };
 
     useEffect(() => {
-        if (ending === 0) {
+        if (good) {
             advanceDialogue("FinalStartG");
-        } else if (ending === 1) {
+        } else {
             advanceDialogue("FinalStartB_0");
         }
-    }, []);
+    }, [good]);
 
     return (
         <>
             <ScreenLayout>
-                <div style={{fontSize: "100px"}}>Mon image here</div>
-
+                <div className="sprite-container">
+                    <div className={good ? "good-idle-sprite" : "bad-idle-sprite"}></div>
+                </div>
                 <Dialogue onAction={handleDialogueAction}/>
             </ScreenLayout>
         </>

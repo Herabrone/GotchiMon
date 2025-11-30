@@ -339,13 +339,13 @@ const dialogueTree = {
 
     // Final dialogue nodes
     FinalStartG: {
-        text: "Wow you evolve fast!",
+        text: "YOU: Wow you evolve fast!",
         options: [
             {text: "Continue", next: "FinalResponseG"}
         ]
     },
     FinalResponseG: {
-        text: "GotchiMon: I'm ready to go off on my own!",
+        text: "GOTCHIMON: I'm ready to go off on my own!",
         options: [
             {text: "Continue", next: "FinalEndG"}
         ]
@@ -358,37 +358,37 @@ const dialogueTree = {
     },
 
     FinalStartB_0: {
-        text: "Hey… are you okay? You seem…",
+        text: "YOU: Hey… are you okay? You seem…",
         options: [
             {text: "Continue", next: "FinalStartB_1"}
         ]
     },
     FinalStartB_1: {
-        text: "Different...",
+        text: "YOU: Different...",
         options: [
             {text: "Continue", next: "FinalResponseB_0"}
         ]
     },
     FinalResponseB_0: {
-        text: "GotchiMon: What...",
+        text: "GOTCHIMON: What...",
         options: [
             {text: "Continue", next: "FinalResponseB_1"}
         ]
     },
     FinalResponseB_1: {
-        text: "GotchiMon: What have you been feeding me?!?!",
+        text: "GOTCHIMON: What have you been feeding me?!?!",
         options: [
             {text: "Continue", next: "FinalResponseB_2"}
         ]
     },
     FinalResponseB_2: {
-        text: "GotchiMon: My...",
+        text: "GOTCHIMON: My...",
         options: [
             {text: "Continue", next: "FinalResponseB_3"}
         ]
     },
     FinalResponseB_3: {
-        text: "GotchiMon: Brothers?!?!",
+        text: "GOTCHIMON: Brothers?!?!",
         options: [
             {text: "Continue", next: "FinalEndB"}
         ]
