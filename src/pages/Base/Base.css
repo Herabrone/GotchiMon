@@ -1,14 +1,15 @@
 
 .tamagotchi-screen .Feed_Button,
-.tamagotchi-screen .Fight_Button {
+.tamagotchi-screen .Fight_Button,
+.tamagotchi-screen .Shop_Button {
     display: inline-block;
-    padding: 6px 10px;
+    padding: 20px 200px;
     background: #fff;
     color: #000;
     border-radius: 6px;
     text-decoration: none;
     cursor: pointer;
-    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    font-size: clamp(1rem, 3vw, 1.2rem);
     white-space: nowrap;
 }
 
