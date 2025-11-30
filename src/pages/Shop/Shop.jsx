@@ -3,7 +3,6 @@ import "./Shop.css";
 import { useEffect, useRef, useState } from "react";
 import ScreenLayout from "../../components/screenlayout";
 import { useNavigate } from "react-router-dom";
-import TextWriter from "../../utils/TextWriter";
 import { updateLocalStorage } from "../../utils/localStorage";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
@@ -70,11 +69,15 @@ export default function Shop() {
         if (cart.length >= 1) { 
             let totalPrice = 0;
             let totalFoodPurchased = 0;
+            let lastFoodType = 'good'; // Default to good
             
             cart.forEach((item) => {
                 totalPrice += item.price;
                 // Count food items purchased (assuming all shop items are food no good or bad)
                 totalFoodPurchased += 1;
+                if (item.type) {
+                    lastFoodType = item.type;
+                }
             });
 
             const currentCoins = parseInt(coins);
