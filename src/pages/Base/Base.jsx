@@ -18,6 +18,7 @@ export default function Base() {
     const [coins, setCoins] = useState(0);
     const [monsterState, setMonsterState] = useState(1);
     const [hasFirstFed, setHasFirstFed] = useState(false);
+    const [showShopButton, setShowShopButton] = useState(false);
 
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
@@ -32,6 +33,9 @@ export default function Base() {
         
         const firstFedStatus = localStorage.getItem("hasFirstFed");
         setHasFirstFed(firstFedStatus ? JSON.parse(firstFedStatus) : false);
+        
+        const shopButtonStatus = localStorage.getItem("showShopButton");
+        setShowShopButton(shopButtonStatus ? JSON.parse(shopButtonStatus) : false);
     }, []);
 
     // If we arrive on this page and the dialogue node was set to Base1,
@@ -69,6 +73,14 @@ export default function Base() {
 
         
     };
+
+    // Show shop button after FirstFeeding_02 dialogue
+    useEffect(() => {
+        if (currentNode === 'FirstFeeding_02' && !showShopButton) {
+            setShowShopButton(true);
+            localStorage.setItem("showShopButton", "true");
+        }
+    }, [currentNode, showShopButton]);
 
     // Get the monster sprite based on state
     const getMonsterSprite = () => {
@@ -109,8 +121,9 @@ export default function Base() {
 
                     <div className="action-buttons">
                         <a className="Feed_Button" onClick={Feed}>Feed</a>
-                        <a onClick={() => {navigate("/fight")}} className="Fight_Button">Fight</a>
-                        <a onClick={()=> {navigate("/shop")}} className="Shop_Button">Shop</a>
+                        {showShopButton && (
+                            <a onClick={()=> {navigate("/shop")}} className="Shop_Button">Shop</a>
+                        )}
                     </div>
                 </>
             )}

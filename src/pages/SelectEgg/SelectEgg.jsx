@@ -101,6 +101,8 @@ export default function SelectEgg() {
                         // Wait 2 seconds then navigate
                         setTimeout(() => {
                             setIsHatching(false);
+                            advanceDialogue('Base1');
+                            setIsDialogueActive(true);
                             navigate('/base');
                         }, 2000);
                     }
