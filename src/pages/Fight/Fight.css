@@ -59,35 +59,46 @@
    Player Sprite
 ================================ */
 .dude-monster-idle {
-    background-image: url("../../../public/assets/sprites/second_evo/Dude_Monster_Idle_4.png");
+    background-image: url("../../assets/sprites/second_evo/Dude_Monster_Idle_4.png");
+    /* No spacing for idle - frames are directly adjacent */
     background-size: 120px 32px;
     transform: scale(2);
-    animation: walk 0.6s steps(4) infinite;
+    animation: walk-idle 0.6s steps(4, end) infinite;
 }
 
 /* ================================
    Enemy Sprites
 ================================ */
 .pink-monster-idle {
-    background-image: url("../../../public/assets/sprites/second_evo/Pink_Monster_Idle_4.png");
+    background-image: url("../../assets/sprites/second_evo/Pink_Monster_Idle_4.png");
+    /* No spacing for idle - frames are directly adjacent */
     background-size: 120px 32px;
     transform: scaleX(-1) scale(2);
-    animation: walk 0.6s steps(4) infinite;
+    animation: walk-idle 0.6s steps(4, end) infinite;
 }
 
 .pink-monster-hurt {
-    background-image: url("../../../public/assets/sprites/second_evo/Pink_Monster_Hurt_4.png");
-    background-size: 120px 32px;
+    background-image: url("../../assets/sprites/second_evo/Pink_Monster_Hurt_4.png");
+    /* Account for spacing: (30+1)*4 = 124px */
+    background-size: 124px 32px;
     transform: scaleX(-1) scale(2);
-    animation: walk 0.6s steps(4) 1 forwards;
+    animation: hurt 0.6s steps(4) 1 forwards;
 }
 
 /* ================================
-   Walk Animation
+   Walk/Idle Animation (no spacing)
 ================================ */
-@keyframes walk {
-    from { background-position: 0 0; }
-    to   { background-position: -120px 0; }
+@keyframes walk-idle {
+    from { background-position-x: 0px; }
+    to   { background-position-x: -120px; }
+}
+
+/* ================================
+   Hurt Animation
+================================ */
+@keyframes hurt {
+    from { background-position-x: 0px; }
+    to   { background-position-x: -124px; }
 }
 
 /* ================================
@@ -108,47 +119,8 @@
 }
 
 /* ================================
-   Textbox
-================================ */
-.textbox {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #000;
-    border-radius: 4px;
-    padding: 12px;
-    margin: 8px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.textbox p {
-    margin: 0;
-    font-size: clamp(0.8rem, 3vw, 1rem);
-}
-
-.text-content {
-    min-height: 1.2em;
-}
-
-.button-area {
-    min-height: 52px;
-}
-
-/* ================================
    Buttons
 ================================ */
-.fight-button {
-    background: #306230;
-    color: white;
-    border: 2px solid #000;
-    padding: 16px;
-    margin: 8px;
-    font-family: "BitDarling10", monospace;
-    font-size: clamp(0.8rem, 3vw, 1rem);
-    cursor: pointer;
-    align-self: flex-start;
-}
 
 .fight-button:hover {
     background: #0f380f;

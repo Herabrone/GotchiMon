@@ -30,6 +30,35 @@ const dialogueTree = {
         ],
     },
     
+    // Fight dialogue nodes
+    FightBegin: {
+        text: "Begin fight!",
+        options: [
+            {text: "Attack", action: "Attack"}
+        ],
+    },
+    FightAttacking: {
+        text: "Attacking...",
+        options: [], // No options during attack animation
+    },
+    FightWon: {
+        text: "Fight is over, you won!",
+        options: [
+            {text: "Continue", next: "FightReward"}
+        ],
+    },
+    FightReward: {
+        text: "Gold coin was dropped.",
+        options: [
+            {text: "Continue", next: "FightComplete"}
+        ],
+    },
+    FightComplete: {
+        text: "Press space to return to base.",
+        options: [
+            {text: "Continue", action: "ReturnToBase", next: null}
+        ],
+    },
 
 };
 

@@ -1,25 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScreenLayout from '../../components/screenlayout';
-import TextWriter from '../../utils/TextWriter';
+import Dialogue from '../../components/Dialogue';
+import { useDialogue } from "../../utils/dialogueContext";
 import './Fight.css';
 
 export default function Fight() {
     const navigate = useNavigate();
+    const { advanceDialogue, setIsDialogueActive, currentNode } = useDialogue();
 
-    const [fightState, setFightState] = useState('begin');
     const [isAttacking, setIsAttacking] = useState(false);
     const [enemyHurt, setEnemyHurt] = useState(false);
     const [enemyVisible, setEnemyVisible] = useState(true);
-    const [showText, setShowText] = useState(true);
     const [shake, setShake] = useState(false);
+    const [canAttack, setCanAttack] = useState(true);
+    
+    // Use ref to prevent multiple attack sequences
+    const isAttackInProgress = useRef(false);
+
+    // Initialize fight dialogue on mount
+    useEffect(() => {
+        setIsDialogueActive(true);
+        advanceDialogue('FightBegin');
+        
+        return () => {
+            setIsDialogueActive(false);
+        };
+    }, []); // Empty deps - only run on mount/unmount
 
     const handleAttack = () => {
-        if (fightState !== 'begin') return;
-    
+        if (!canAttack || isAttackInProgress.current) {
+            return;
+        }
+        
+        isAttackInProgress.current = true;
+        setCanAttack(false);
         setIsAttacking(true);
-        setFightState('attacking');
-        setShowText(false);
     
         // End dash → trigger hurt
         setTimeout(() => {
@@ -30,29 +46,23 @@ export default function Fight() {
             setTimeout(() => setShake(false), 250);
         }, 800);
     
-        // Allow hurt animation to ACTUALLY render
+        // Allow hurt animation to render, then show victory
         setTimeout(() => {
             setEnemyVisible(false);
-            setEnemyHurt(true);
-            setFightState('won');
-            setShowText(true);
-        }, 800 + 600); // dash + 1 hurt loop
+            isAttackInProgress.current = false;
+            
+            // Use setTimeout to ensure state updates are complete
+            setTimeout(() => {
+                advanceDialogue('FightWon');
+            }, 50);
+        }, 1400);
     };
 
-    const handleContinue = () => {
-        if (fightState === 'won') {
-            setShowText(false);
-            setTimeout(() => {
-                setFightState('reward');
-                setShowText(true);
-            }, 100);
-        } else if (fightState === 'reward') {
-            setShowText(false);
-            setTimeout(() => {
-                setFightState('complete');
-                setShowText(true);
-            }, 100);
-        } else if (fightState === 'complete') {
+    const handleDialogueAction = (action, option) => {
+        
+        if (action === "Attack" && canAttack && !isAttackInProgress.current) {
+            handleAttack();
+        } else if (action === "ReturnToBase") {
             navigate('/base');
         }
     };
@@ -62,34 +72,20 @@ export default function Fight() {
         const handleKeyPress = (e) => {
             if (e.key === ' ' || e.code === 'Space') {
                 e.preventDefault();
-                if (fightState === 'begin') {
-                    handleAttack();
-                } else {
-                    handleContinue();
+                const continueBtn = document.querySelector('.dialogue-options button');
+                if (continueBtn) {
+                    continueBtn.click();
                 }
             }
         };
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [fightState]);
+    }, []);
 
-    const getTextboxMessage = () => {
-        switch (fightState) {
-            case 'begin':
-                return 'Begin fight!';
-            case 'attacking':
-                return 'Attacking...';
-            case 'won':
-                return 'Fight is over, you won!';
-            case 'reward':
-                return 'Gold coin was dropped.';
-            case 'complete':
-                return 'Press space to return to base.';
-            default:
-                return '';
-        }
-    };
+    // Debug log when currentNode changes
+    useEffect(() => {
+    }, [currentNode]);
 
     return (
         <ScreenLayout>
@@ -114,39 +110,8 @@ export default function Fight() {
                     </div> )}
                 </div>
 
-                {/* Text Box */}
-                <div className="textbox">
-                    <div className="text-content">
-                        {showText && (
-                            <TextWriter
-                                text={getTextboxMessage()}
-                                delay={30}
-                            />
-                        )}
-                    </div>
-
-                    <div className="button-area">
-                        {fightState === 'begin' && (
-                            <button
-                                onClick={handleAttack}
-                                className="fight-button"
-                            >
-                                Attack
-                            </button>
-                        )}
-
-                        {(fightState === 'won' ||
-                            fightState === 'reward' ||
-                            fightState === 'complete') && (
-                            <button
-                                onClick={handleContinue}
-                                className="fight-button"
-                            >
-                                Continue
-                            </button>
-                        )}
-                    </div>
-                </div>
+                {/* Dialogue System */}
+                <Dialogue onAction={handleDialogueAction} />
             </div>
         </ScreenLayout>
     );

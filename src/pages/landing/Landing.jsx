@@ -28,23 +28,18 @@ export default function Landing() {
 
     return (
         <ScreenLayout>
-            <h1 className="gotchimon-title">GotchiMon</h1>
+            <div className="landing-container">
+                <h1 className="gotchimon-title">GotchiMon</h1>
 
-            {/* Show controls only when dialogue is not active */}
-            
-            {!isDialogueActive && (
-                <>
-                    <div className='start-button'>
-                        <a onClick={startDialogue} className="start">Start</a>
-                    </div>
+                {/* Show controls only when dialogue is not active */}
+                {!isDialogueActive && (
+                    <button onClick={startDialogue} className="start-button">
+                        Start
+                    </button>
+                )}
 
-                    <div className='exit-button'>
-                        <a onClick={() => {navigate("/")}} className="exit">Exit</a>
-                    </div>
-                </>
-            )}
-
-            <Dialogue onAction={handleDialogueAction} />
+                <Dialogue onAction={handleDialogueAction} />
+            </div>
         </ScreenLayout>
     )
 }
