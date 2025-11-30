@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import "./SelectEgg.css";
 import { useDialogue } from "../../utils/dialogueContext";
 import Dialogue from "../../components/Dialogue";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom"; // KEEP ONLY THIS IMPORT
 import ScreenLayout from "../../components/screenlayout";
 import { useState, useEffect, useCallback } from "react";
 import { updateLocalStorage } from "../../utils/localStorage";
@@ -36,7 +34,8 @@ const eggPhases = [
 
 export default function SelectEgg() {
     const navigate = useNavigate();
-    const { advanceDialogue, setIsDialogueActive, isDialogueActive } = useDialogue();
+    // FIX 2: IMPORT currentNode from useDialogue
+    const { advanceDialogue, setIsDialogueActive, isDialogueActive, currentNode } = useDialogue();
 
     const eggs = [
         { name: "Egg 1", still: egg1, descent: egg1Descent },
@@ -68,7 +67,11 @@ export default function SelectEgg() {
         if (eggNumber === 2) advanceDialogue("EggSelected3_0");
 
         updateLocalStorage("myEgg", eggs[eggNumber]);
-        setIsDialogueActive(true);
+        
+        // FIX for triple-click issue: Delay dialogue activation slightly.
+        setTimeout(() => {
+            setIsDialogueActive(true);
+        }, 50); 
     };
 
     // --- SPACE Press for cracking logic ---
@@ -119,6 +122,7 @@ export default function SelectEgg() {
 
     // When dialogue advances to Base1, navigate to the base page
     useEffect(() => {
+        // currentNode is now available here.
         if (currentNode === 'Base1') {
             navigate('/base');
         }
