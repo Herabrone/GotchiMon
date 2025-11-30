@@ -1,26 +1,36 @@
+.device-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .device {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    /* background-image: url('/path/to/your/device.png');  Add PNG here later*/
+  position: relative;
+  margin-top: -20vh;
+  width: 190vmin;               /* responsive: uses the smaller of vw/vh */
+  aspect-ratio: 1 / 1;         /* stays perfectly square */
+  
+  background-image: url('../../public/assets/tomogachi-background.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .screen {
-    /* Currently 320x240 (4:3) but we can change it to fit our screen size */
+    position: absolute;
 
+    /* These percentages stay perfectly aligned no matter the size */
+    width: 42%;
+    height: 43%;
+    left: 29%;
+    top: 35%;
 
-    aspect-ratio: 250/260;
-    min-height: 80vh;
-    position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
     background: #9bbc0f;
     border: 2px solid #000;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Everything inside is positioned relative to this container */
