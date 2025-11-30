@@ -1,6 +1,6 @@
 const dialogueTree = {
     start:{
-        text: "Hello! Were so exited for you to join us at get your first GotchiMon!",
+        text: "Hello! Were so excited for you to join us at get your first GotchiMon!",
         options: [
             {text: "Continue", next: "Nursery01"},
         ],
@@ -30,6 +30,12 @@ const dialogueTree = {
         options: [
             {text: "Continue", action: "HatchEgg", next: null}
         ],
+    },
+    EggHatched:{
+        text:"Your GotchiMon hatched!",
+        options: [
+            {text: "Continue", action: "HatchEgg", next: null}
+        ]
     },
 
     // EGG 2
