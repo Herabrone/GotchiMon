@@ -122,6 +122,8 @@ export default function Shop() {
             <audio ref={audioRef} src={shopAudio}></audio>
             <ScreenLayout>
                 <div className="shop-container">
+                    <a className="shop-back" onClick={() => navigate('/base')}>← Back to Base</a>
+                    
                     <h2 className="shop-title">Shop</h2> 
                     
                     <div  style={{display: "flex", justifyContent: "space-between"}}>
