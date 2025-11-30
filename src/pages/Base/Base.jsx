@@ -28,6 +28,7 @@ export default function Base() {
     const [hasThirdFed, setHasThirdFed] = useState(false);
     const [showFightButton, setShowFightButton] = useState(false);
     const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
+    const [hasCompletedFirstFight, setHasCompletedFirstFight] = useState(false);
 
     const audioRef = useRef(null); 
     const eatAudioRef = useRef(null);
@@ -83,6 +84,9 @@ export default function Base() {
         
         const fightButtonStatus = localStorage.getItem("showFightButton");
         setShowFightButton(fightButtonStatus ? JSON.parse(fightButtonStatus) : false);
+        
+        const firstFightStatus = localStorage.getItem("hasCompletedFirstFight");
+        setHasCompletedFirstFight(firstFightStatus ? JSON.parse(firstFightStatus) : false);
     }, []);
 
     // Handle returning from evolution page - show appropriate dialogue
@@ -101,6 +105,22 @@ export default function Base() {
             }
         }
     }, [monsterState, hasReturnedFromEvolution, advanceDialogue, setIsDialogueActive]);
+
+    // Handle returning from first fight - show AfterFirstFight dialogue
+    useEffect(() => {
+        const returnedFromFirstFight = localStorage.getItem('returnedFromFirstFight');
+        if (returnedFromFirstFight === 'true' && !hasCompletedFirstFight) {
+            localStorage.removeItem('returnedFromFirstFight');
+            setHasCompletedFirstFight(true);
+            localStorage.setItem('hasCompletedFirstFight', 'true');
+            
+            // Show "after first fight" dialogue
+            setTimeout(() => {
+                advanceDialogue('AfterFirstFight_01');
+                setIsDialogueActive(true);
+            }, 500);
+        }
+    }, [hasCompletedFirstFight, advanceDialogue, setIsDialogueActive]);
 
     // If we arrive on this page and the dialogue node was set to Base1,
     // make sure the dialogue UI is activated so the Base1 text appears.

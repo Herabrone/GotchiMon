@@ -65,6 +65,11 @@ export default function Fight() {
         if (action === "Attack" && canAttack && !isAttackInProgress.current) {
             handleAttack();
         } else if (action === "ReturnToBase") {
+            // Check if this is the first fight completion
+            const hasCompletedFirstFight = localStorage.getItem('hasCompletedFirstFight');
+            if (!hasCompletedFirstFight || hasCompletedFirstFight === 'false') {
+                localStorage.setItem('returnedFromFirstFight', 'true');
+            }
             navigate('/base');
         } else if (action == "RewardCoin") {
             const currCoins = Number(localStorage.getItem("coins"));
