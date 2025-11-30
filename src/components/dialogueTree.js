@@ -16,7 +16,7 @@ const dialogueTree = {
     EggSelected1_0:{
         text:"You have selected Egg 1! EGGcelent choice!",
         options: [
-            {text: "Continue", next: "EggSelected1_1"}
+            {text: "...", next: "EggSelected1_1"}
         ],
     },
     EggSelected1_1:{
