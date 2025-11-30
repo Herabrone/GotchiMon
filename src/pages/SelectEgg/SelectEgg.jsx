@@ -18,7 +18,9 @@ import hatchSound from "../../../public/assets/sfx/egg-hatch/hatch_success.mp3";
 const eggPhases = [
     "/assets/sprites/egg/egg.gif",
     "/assets/sprites/egg/egg-crack-1.gif",
-    "/assets/sprites/first-evo/Blue Slime.png"
+    "/assets/sprites/egg/egg-crack-2.gif",
+    "/assets/sprites/egg/egg-crack-3.gif",
+    "/assets/sprites/first_evo/Blue_Slime.png"
 ];
 
 const hatchSounds = [crack1, hatchSound];
@@ -121,7 +123,11 @@ export default function SelectEgg() {
                             className="egg-hatching-sprite selected-egg-img"
                             alt="egg hatching"
                         />
-                        <p className="hatch-instructions">Press SPACE to hatch…</p>
+                        <p className="hatch-instructions">
+                            {phaseIndex < eggPhases.length - 1 
+                                ? "Press SPACE to hatch…" 
+                                : "Your Gotchimon hatched!"}
+                        </p>
                     </div>
                 )}
 
