@@ -117,7 +117,7 @@ export default function Evolution() {
             console.log('Evolved to Dude Monster');
         } else if (newState === 3) {
             // Second evolution: dude -> good/bad
-            const alignment = localStorage.getItem('monster_alignment') || 'good';
+            const alignment = localStorage.getItem('monsterAlignment') || 'good';
             setCurrentSprite(alignment === 'good' ? goodMonster : badMonster);
             setUseAnimatedSprite(true); // Final forms use CSS animation
             console.log('Evolved to final form:', alignment);
@@ -157,7 +157,7 @@ export default function Evolution() {
             return <div className="dude-evolution-sprite"></div>;
         } else if (monsterState === 3 && useAnimatedSprite) {
             // Final form with CSS animation
-            const alignment = localStorage.getItem('monster_alignment') || 'good';
+            const alignment = localStorage.getItem('monsterAlignment') || 'good';
             return <div className={alignment === 'good' ? 'good-evolution-sprite' : 'bad-evolution-sprite'}></div>;
         }
         

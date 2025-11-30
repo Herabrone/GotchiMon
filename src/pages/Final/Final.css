@@ -18,14 +18,14 @@
 }
 
 .bad-idle-sprite {
-    width: 40px;
-    height: 70px;
-    transform: scale(5);
+    width: 32px;
+    height: 32px;
+    transform: scale(12);
     image-rendering: pixelated;
     background-image: url('../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png');
-    background-size: 256px 64px;
+    background-size: 192px 32px; /* 6 frames of 32px each */
     background-repeat: no-repeat;
-    animation: evo-walk 1s steps(6) infinite;
+    animation: bad-walk 0.8s steps(6) infinite;
 }
 
 @keyframes evo-walk {

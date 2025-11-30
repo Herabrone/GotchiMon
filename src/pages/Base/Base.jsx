@@ -153,7 +153,7 @@ export default function Base() {
                 setHasReturnedFromSecondEvolution(true);
                 
                 // Check alignment and show appropriate dialogue
-                const alignment = localStorage.getItem('monster_alignment') || 'good';
+                const alignment = localStorage.getItem('monsterAlignment') || 'good';
                 setTimeout(() => {
                     if (alignment.includes('good')) {
                         advanceDialogue('afterSecondEvolution_GOOD_0');
@@ -294,7 +294,7 @@ export default function Base() {
                 return <div className="dude-base-sprite"></div>;
             case 3:
                 // Final form with CSS animation (good or bad)
-                const alignment = localStorage.getItem('monster_alignment') || 'good';
+                const alignment = localStorage.getItem('monsterAlignment') || 'good';
                 return <div className={alignment === 'good' ? 'good-base-sprite' : 'bad-base-sprite'}></div>;
             default:
                 return <div className="slime-idle-sprite"></div>;
