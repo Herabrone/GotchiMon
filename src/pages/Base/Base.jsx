@@ -15,12 +15,16 @@ export default function Base() {
     const { currentNode, isDialogueActive, setIsDialogueActive } = useDialogue();
     const [isVisible, setIsVisible] = useState(false);
     const [food, setFood] = useState(0);
+    const [coins, setCoins] = useState(0);
     const [monsterState, setMonsterState] = useState(1);
 
-    // Load food count and monster state from localStorage
+    // Load food count, coins, and monster state from localStorage
     useEffect(() => {
         const foodCount = JSON.parse(localStorage.getItem("food")) || 0;
         setFood(foodCount);
+        
+        const coinCount = JSON.parse(localStorage.getItem("coins")) || 1;
+        setCoins(coinCount);
         
         const savedMonsterState = JSON.parse(localStorage.getItem("monster_state")) || 1;
         setMonsterState(savedMonsterState);
@@ -36,15 +40,15 @@ export default function Base() {
 
     const Feed = () => {
 
-       
         if (food > 0) {
             setFood(food - 1);
             localStorage.setItem("food", JSON.stringify(food - 1));
-
             setIsVisible(true); // Show the div
             setTimeout(() => {
             setIsVisible(false); // Hide the div after 1000ms (1 second)
             }, 1000);
+
+            //TODO: Add feeding animation and sound effect here
         }
 
         
@@ -68,8 +72,13 @@ export default function Base() {
 
             {!isDialogueActive && (
                 <>
-                    <div className="food-display">
-                        Food: {food}
+                    <div className="resources-container">
+                        <div className="food-display">
+                            Food: {food}
+                        </div>
+                        <div className="coin-display">
+                            Coins: {coins}
+                        </div>
                     </div>
 
                     <div className="monster-display">

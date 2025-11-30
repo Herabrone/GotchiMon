@@ -34,7 +34,6 @@ const eggPhases = [
 
 export default function SelectEgg() {
     const navigate = useNavigate();
-    // FIX 2: IMPORT currentNode from useDialogue
     const { advanceDialogue, setIsDialogueActive, isDialogueActive, currentNode } = useDialogue();
 
     const eggs = [
