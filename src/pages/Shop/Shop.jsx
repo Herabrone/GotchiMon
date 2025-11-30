@@ -92,33 +92,40 @@ export default function Shop() {
                             <div className="coin-sprite"></div>
                         </div>
                     </div>
-
-                    <div className="shop-grid">
-                        {items.map((item) => (
-                            <div className={item.stock <= 0 ? "shop-grid-item sold-out" : "shop-grid-item"} onClick={() => addToCart(item.id)}>
-                                <img src={food}/>
-                                <span>{item.name}</span>
-                                <span>Stock: {item.stock}</span>
-                                <span>Price: {item.price}</span>
-                            </div>
-                        ))}
+                    <div className="shop-grid-container">
+                        <div className="shop-grid">
+                            {items.map((item) => (
+                                <div className={item.stock <= 0 ? "shop-grid-item sold-out" : "shop-grid-item"} onClick={() => addToCart(item.id)}>
+                                    <img src={food}/>
+                                    <span>{item.name}</span>
+                                    <span>Stock: {item.stock}</span>
+                                    <span>Price: {item.price}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     
-                    <div className="shop-cart">
-                        <h3>Cart:</h3>
-                        {cart.map((item, index) => (
-                            <div className="shop-cart-item">
-                                <img src={item.image} onClick={() => removeFromCart(index)}/>
+                    <div className="shop-bottom-container">
+                        <div className="shop-cart-container">
+                            <div className="shop-cart">
+                                <h3>Cart:</h3>
+                                {cart.map((item, index) => (
+                                    <div className="shop-cart-item">
+                                        <img src={item.image} onClick={() => removeFromCart(index)}/>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
 
-                    <div className="shop-coins-container">
-                        <p>Total: {cartTotal}</p>
-                        <div className="coin-sprite"></div>
+                            <div className="shop-coins-container">
+                                <p>Total: {cartTotal}</p>
+                                <div className="coin-sprite"></div>
+                            </div>
+                        </div>
+
+                        <a className="shop-checkout" onClick={() => checkout()}>Checkout</a>
                     </div>
                     
-                    <a className="shop-checkout" onClick={() => checkout()} disabled={true}>Checkout</a>
+                    
                 </div>
 
                 <div className="dialogue">
