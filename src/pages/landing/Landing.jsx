@@ -1,10 +1,11 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScreenLayout from '../../components/screenlayout';
 import Dialogue from '../../components/Dialogue';
 import { useDialogue } from "../../utils/dialogueContext";
 
 import './Landing.css';
+import { shopItems } from '../../data/ShopData';
+import { coins } from '../../data/UserData';
 
 export default function Landing() {
     const { setIsDialogueActive, resetDialogue, isDialogueActive } = useDialogue();
@@ -12,6 +13,7 @@ export default function Landing() {
 
     // Start dialogue when user clicks Start by resetting the dialogue
     const startDialogue = () => {
+        initializeLocalStorage();
         // reset to 'start' node and activate the dialogue
         if (typeof resetDialogue === 'function') {
             resetDialogue();
@@ -25,6 +27,13 @@ export default function Landing() {
            navigate("/select-egg");
         }
     };
+
+    function initializeLocalStorage() {
+        // initialize store
+        localStorage.clear();
+        localStorage.setItem("shopItems", JSON.stringify(shopItems));
+        localStorage.setItem("coins", JSON.stringify(coins));
+    }
 
     return (
         <ScreenLayout>
