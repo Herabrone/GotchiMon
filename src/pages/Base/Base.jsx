@@ -12,6 +12,23 @@ import monsterState2Sprite from '../../../public/assets/sprites/second_evo/Dude_
 import goodMonsterSprite from '../../../public/assets/sprites/third_evo/Good_monster_Idle.png';
 import badMonsterSprite from '../../../public/assets/sprites/third_evo/Bad_Monster_Idle.png';
 
+// Volume Up
+const VolumeUpIcon = ({ size = 24 }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a7 7 0 0 1 0 7.08"></path>
+    </svg>
+);
+
+// Mute
+const VolumeMuteIcon = ({ size = 24 }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="22" y1="9" x2="16" y2="15"></line>
+        <line x1="16" y1="9" x2="22" y2="15"></line>
+    </svg>
+);
+
 const IDLE_MUSIC_SRC = '/../../../public/assets/sfx/bg-music/idle/idle.mp3'; 
 const EAT_SOUND_SRC = '/../../../public/assets/sfx/feed/eat.mp3'; 
 
@@ -29,7 +46,12 @@ export default function Base() {
     const [showFightButton, setShowFightButton] = useState(false);
     const [hasReturnedFromEvolution, setHasReturnedFromEvolution] = useState(false);
     const [hasCompletedFirstFight, setHasCompletedFirstFight] = useState(false);
-    const [hasReturnedFromSecondEvolution, setHasReturnedFromSecondEvolution] = useState(false);
+    const [isMuted, setIsMuted] = useState(
+        () => {
+            const savedMuteStatus = localStorage.getItem("isMuted");
+            return savedMuteStatus ? JSON.parse(savedMuteStatus) : false;
+        }
+    );
 
     const audioRef = useRef(null); 
     const eatAudioRef = useRef(null);
@@ -42,6 +64,7 @@ export default function Base() {
                 audio.loop = true;
                 audio.volume = 0.5; 
                 audio.currentTime = 0; 
+                audio.muted = isMuted;
 
                 audio.play().catch(e => {
                     console.warn("Base Page BGM failed to play automatically. User interaction needed:", e);
@@ -59,6 +82,19 @@ export default function Base() {
             }
         };
     }, []); 
+
+    // Sync mute state with audio element whenever isMuted changes
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.muted = isMuted;
+        }
+        localStorage.setItem("isMuted", JSON.stringify(isMuted));
+    }, [isMuted]);
+
+    // Function to toggle mute
+    const toggleMute = () => {
+        setIsMuted(prev => !prev);
+    };
 
     // Load food count, coins, and monster state from localStorage
     useEffect(() => {
@@ -231,7 +267,6 @@ export default function Base() {
             }, 100);
         } else if (action === 'secondEvolution') {
             // Set dialogue to Evolution2 before navigating
-            localStorage.setItem('justEvolvedToFinal', 'true');
             advanceDialogue('Evolution2');
             setTimeout(() => {
                 navigate('/evolution');
@@ -293,6 +328,10 @@ export default function Base() {
                             Coins: {coins}
                         </div>
                     </div>
+
+                    <button onClick={toggleMute} className="mute-button" title={isMuted ? "Unmute" : "Mute"}>
+                        {isMuted ? <VolumeMuteIcon size={24} /> : <VolumeUpIcon size={24} />}
+                    </button>
 
                     <div className="monster-display">
                         {renderMonster()}
